@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>南昌理工学院2020年普通高校专升本报名系统</title>
+    <!-- Bootstrap core CSS -->
+    <link href="asserts/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="asserts/css/signin.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+<form class="form-signin" action="/register" th:action="@{/register}" th:method="post">
+    <img class="mb-4" th:src="@{/asserts/img/nclg.jpg}" alt="" width="250" height="60">
+    <!--			<img class="mb-4" src="asserts/img/bootstrap-solid.svg" alt="" width="72" height="72">-->
+    <h1 style="font-family: 'Arial Black';margin-bottom: 35px">考生信息注册</h1>
+<!--    <p style="color: red" th:if="${not #strings.isEmpty(acountmsg)}" th:text="${acountmsg}"></p>-->
+    <p style="color: red" th:if="${not #strings.isEmpty(acountmsgnum)}" th:text="${acountmsgnum}"></p>
+    <p style="color: red" th:if="${not #strings.isEmpty(acountmsgcf)}" th:text="${acountmsgcf}"></p>
+    <p style="color: red" th:if="${not #strings.isEmpty(pwdmsgnum)}" th:text="${pwdmsgnum}"></p>
+    <p style="color: red" th:if="${not #strings.isEmpty(pwdmsglen)}" th:text="${pwdmsglen}"></p>
+<!--    <label class="sr-only" >身份证号码</label>-->
+    <input type="text" th:maxlength="18" class="form-control" name="account" th:placeholder="18位身份证号码"  required="" autofocus="" style="margin-bottom: 20px">
+<!--    <label class="sr-only" >密码</label> -->
+    <input id="pwd" type="password" th:maxlength="18" class="form-control" name="pwd" th:placeholder="密码" required="" style="margin-bottom: 20px">
+    <input type="password" th:maxlength="18" class="form-control" name="password" th:placeholder="再次输入密码" required="" style="margin-bottom: 20px">
+    <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-bottom: 20px" >注册</button>
+    <a href="index.html">返回主页</a>
+    <p class="mt-5 mb-3 text-muted">© 2020-2021</p>
+</form>
+
+<!--    <a class="btn btn-sm" th:href="@{/index.html(l='zh_CN')}">中文</a>-->
+<!--    <a class="btn btn-sm" th:href="@{/index.html(l='en_US')}">English</a>-->
+
+
+</body>
+
+</html>

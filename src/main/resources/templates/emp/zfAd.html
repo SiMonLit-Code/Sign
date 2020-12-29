@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>南昌理工学院2020年普通高校专升本报名系统</title>
+    <!-- Bootstrap core CSS href="../../static/asserts/css/bootstrap.min.css"-->
+    <link th:href="@{/asserts/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+</head>
+
+<body>
+<!--引入抽取的模板topbar-->
+<!--模板名：会使用thymeleaf的前后缀配置规则进行解析  th:insert="~{抽取片段的文件名路径::抽取片段名}"-->
+<!--两种写法：th:replace="~{dashboard::topbar}"和th:replace="dashboard::topbar"-->
+<div th:replace="admin/bar/bar::top"></div>
+<div class="container-fluid">
+    <div class="row">
+        <!--引入侧边栏 使用th:replace="~{抽取片段的文件名路径::#id名}"-->
+        <div th:replace="~{admin/bar/bar::side(active='zf')}"></div>
+
+<!--            <a href="/payment/orderSubmit">支付二维码显示</a>-->
+<!--            <p style="color: red" th:if="${not #strings.isEmpty(trade_state_desc)}" th:text="${trade_state_desc}"></p>-->
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                <!--					<div><h2><button class="btn-light" onclick="save()">添加员工</button></h2><input style="align-content: center" ></div>-->
+                <div class="table-responsive" >
+                    <h1>请用输入需要关闭订单的身份证号</h1>
+<!--                    <p style="color: red" th:if="${not #strings.isEmpty(result_code)}" th:text="${result_code}"></p>-->
+                    <form th:action="@{/payment/orderClose}" method="post">
+                        <input type="text" name="id" required="" />
+                        <input type="submit" value="关闭订单"/>
+                    </form>
+                    <a th:href="@{/payment/orderQueryAll}">一键查询</a>
+                    <h1>请用输入需要查询的身份证号</h1>
+                    <form th:action="@{/payment/orderQueryid}" method="post">
+                        <input type="text" name="payid" maxlength="18" required=""/>
+                        <input type="submit" value="查询是否支付"/>
+                    </form>
+                    <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th>考生序号</th>
+                                <th>订单编号</th>
+                                <th>订单支付情况</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="product:${products}">
+                                <td th:text="${product.getRemark()}"></td>
+                                <td th:text="${product.getOrderNo()}"></td>
+                                <td th:text="${product.getPrice()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                </div>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" th:src="@{/static/asserts/js/jquery-3.2.1.slim.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/asserts/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/asserts/js/bootstrap.min.js}"></script>
+
+<!-- Icons -->
+<script type="text/javascript" th:src="@{/static/asserts/js/feather.min.js}"></script>
+<script>
+    feather.replace()
+</script>
+
+<!-- Graphs -->
+<script type="text/javascript" th:src="@{/static/asserts/js/Chart.min.js}"></script>
+<script>
+    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            datasets: [{
+                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+                lineTension: 0,
+                backgroundColor: 'transparent',
+                borderColor: '#007bff',
+                borderWidth: 4,
+                pointBackgroundColor: '#007bff'
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: false
+                    }
+                }]
+            },
+            legend: {
+                display: false,
+            }
+        }
+    });
+</script>
+
+</body>
+
+</html>

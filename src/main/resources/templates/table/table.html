@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="top"></div>
+    <div id="center">
+        <table border="1" align="center" width="1000">
+            <thead>
+                <tr height="35">
+                    <td width="160" align="center">姓名</td>
+                    <td width="160" align="center">性别</td>
+                    <td width="160" align="center">民族</td>
+                    <td width="160" align="center">出生年月日</td>
+                    <td width="160" align="center">政治面貌</td>
+                    <td colspan="2" rowspan="4" width="200" align="center" valign="middle">上传照片</td>
+                    <td hidden></td>
+                </tr>
+                <tr height="35">
+                    <td><input style="width:100%;height:100%" name="sName" align="center"></td>
+                    <td><input style="width:100%;height:100%" name="gender"></td>
+                    <td><input style="width:100%;height:100%" name="nation"></td>
+                    <td><input style="width:100%;height:100%" name="birth"></td>
+                    <td><input style="width:100%;height:100%" name="pc"></td>
+                </tr>
+                <tr height="35">
+                    <td colspan="2" align="center">身份证号</td>
+                    <td colspan="3"><input name="dId" style="width:100%;height:100%"></td>
+                </tr>
+                <tr height="35">
+                    <td colspan="2" align="center">高考考生号</td>
+                    <td colspan="3"><input name="gId" style="width:100%;height:100%"></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr height="35">
+                    <td colspan="2" align="center">专科毕业学校</td>
+                    <td width="180"></td>
+                    <td colspan="2" align="center">专科所学专业</td>
+                    <td width="180" colspan="2"><input name="cMajor" style="width:100%;height:100%"></td>
+                </tr>
+                <tr height="35">
+                    <td colspan="2" align="center">本人详细通信地址</td>
+                    <td colspan="3"><input name="addr" style="width:100%;height:100%"></td>
+                    <td width="100" align="center">邮编</td>
+                    <td width="100"><input name="pos" style="width:100%;height:100%"></td>
+                </tr>
+                <tr height="35">
+                    <td colspan="2" align="center">联系电话</td>
+                    <td width="180"><input name="person" style="width:100%;height:100%"></td>
+                    <td colspan="2" align="center">家庭联系电话</td>
+                    <td width="180" colspan="2"><input name="parent" style="width:100%;height:100%"></td>
+                </tr>
+                <tr height="35">
+                    <td colspan="2" align="center">专科综合测评</td>
+                    <td align="center">担任何种职务</td>
+                    <td colspan="2" align="center">受奖励情况</td>
+                    <td colspan="2" align="center">受纪律处分情况</td>
+                </tr>
+                <tr height="35">
+                    <td colspan="2"></td>
+                    <td></td>
+                    <td colspan="2"></td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr height="35">
+                    <td rowspan="2" colspan="2" align="center">选拔测试成绩</td>
+                    <td align="center">英语</td>
+                    <td align="center">基础1</td>
+                    <td align="center">基础2</td>
+                    <td align="center">总分</td>
+                    <td colspan="2" align="center">招生专业测试名次</td>
+                </tr>
+                <tr height="35">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td colspan="2"></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr height="70">
+                    <td rowspan="3" align="center" valign="middle">推荐审批情况</td>
+                    <td align="center" valign="middle">院系意见</td>
+                    <td colspan="5"></td>
+                </tr>
+                <tr tr height="70">
+                    <td align="center" valign="middle">毕业高校意见</td>
+                    <td colspan="5"></td>
+                </tr>
+                <tr tr height="70">
+                    <td align="center" valign="middle">招生高校 意见 </td>
+                    <td colspan="5"></td>
+                </tr>
+
+            </tfoot>
+        </table>
+    </div>
+    <div id="foot"></div>
+    <button type="submit" th:onclick="javascript:submitForm([[${pageIndex}]],[[${pageSize}]])" class="btn btn-primary">提交</button>
+</body>
+</html>

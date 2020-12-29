@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>报名信息表</title>
+</head>
+<body>
+<div id="top"></div>
+<div id="center">
+    <h2 align="center">江西省普通高校专升本招生报名推荐表</h2>
+<!--    <div align="center">-->
+<!--        <label  style="margin-right: 560px;align-content: center">报考学校：南昌理工学院</label><label>报考专业：_________</label>-->
+<!--    </div>-->
+    <div align="center" style="margin-bottom: 20px">
+        <label align="center" style="margin-right: 50px">报考学校：南昌理工学院</label>
+        <label >报考专业：</label><label th:text="${collect.getGmajor()}"></label>
+    </div>
+    <table  align="center" width="1000" style="border: black;width: 90%" border="1" cellspacing=0 cellpadding=0 >
+
+        <thead>
+        <tr height="50">
+            <td width="160" align="center">姓名</td>
+            <td width="160" align="center">性别</td>
+            <td width="160" align="center">民族</td>
+            <td width="160" align="center">出生年月日</td>
+            <td width="160" align="center">政治面貌</td>
+            <td colspan="2" rowspan="4" width="200" align="center" valign="middle">
+                <img th:src="@{${zp}}" alt="照片" width="170" height="200" align="center">
+            </td>
+            <td hidden></td>
+        </tr>
+        <tr height="50">
+            <td align="center"  th:text="${collect.getSname()}"></td>
+            <td align="center"  th:text="${collect.getGender()}==2?'女':'男'"></td>
+            <td align="center"  th:text="${mz}"></td>
+            <td align="center"  th:text="${collect.getBirth()}"></td>
+            <td align="center"  th:text="${zz}"></td>
+        </tr>
+        <tr height="50">
+            <td colspan="2" align="center">身份证号</td>
+            <td colspan="3" th:text="${collect.getDid()}" align="center"></td>
+        </tr>
+        <tr height="50">
+            <td colspan="2" align="center">高考考生号</td>
+            <td colspan="3" th:text="${collect.getGid()}" align="center"></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr height="35">
+            <td colspan="2" align="center">专科毕业学校</td>
+            <td width="180" align="center" th:text="${collect.getCname()}"></td>
+            <td colspan="2" align="center" >专科所学专业</td>
+            <td width="180" colspan="2" align="center" th:text="${collect.getCmajor()}" ></td>
+        </tr>
+        <tr height="35">
+            <td colspan="2" align="center">本人详细通信地址</td>
+            <td colspan="3" th:text="${collect.getAddr()}" align="center"></td>
+            <td width="100" align="center">邮编</td>
+            <td width="100" th:text="${collect.getPos()}" align="center"></td>
+        </tr>
+        <tr height="35">
+            <td colspan="2" align="center">联系电话</td>
+            <td width="180" th:text="${collect.getPerson()}" align="center"></td>
+            <td colspan="2" align="center">家庭联系电话</td>
+            <td width="180" colspan="2" th:text="${collect.getParent()}" align="center"></td>
+        </tr>
+        <tr height="35">
+            <td colspan="2" align="center">专科综合测评</td>
+            <td align="center">担任何种职务</td>
+            <td colspan="2" align="center">受奖励情况</td>
+            <td colspan="2" align="center">受纪律处分情况</td>
+        </tr>
+        <tr height="35">
+            <td colspan="2"></td>
+            <td></td>
+            <td colspan="2"></td>
+            <td colspan="2"></td>
+        </tr>
+        <tr height="35">
+            <td rowspan="2" colspan="2" align="center">选拔测试成绩</td>
+            <td align="center">英语</td>
+            <td align="center">基础1</td>
+            <td align="center">基础2</td>
+            <td align="center">总分</td>
+            <td colspan="2" align="center">招生专业测试名次</td>
+        </tr>
+        <tr height="35">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td colspan="2"></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr height="140">
+            <td rowspan="3" align="center" valign="middle">推荐审批情况</td>
+            <td align="center" valign="middle">院系意见</td>
+            <td colspan="5"></td>
+        </tr>
+        <tr tr height="140">
+            <td align="center" valign="middle">毕业高校意见</td>
+            <td colspan="5"></td>
+        </tr>
+        <tr tr height="140">
+            <td align="center" valign="middle">招生高校 意见 </td>
+            <td colspan="5"></td>
+        </tr>
+
+        </tfoot>
+    </table>
+</div>
+<div align="center" id="foot">注：本表一式三份，推荐高校、招生高校、学生本人档案各存一份</div>
+<a align="center" href="/collect/return">返回主页</a>
+</body>
+</html>

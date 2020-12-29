@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>南昌理工学院2020年普通高校专升本报名系统</title>
+    <!-- Bootstrap core CSS href="../../static/asserts/css/bootstrap.min.css"-->
+    <link th:href="@{/asserts/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+</head>
+
+<body>
+<!--引入抽取的模板topbar-->
+<!--模板名：会使用thymeleaf的前后缀配置规则进行解析  th:insert="~{抽取片段的文件名路径::抽取片段名}"-->
+<!--两种写法：th:replace="~{dashboard::topbar}"和th:replace="dashboard::topbar"-->
+<div th:replace="bar/bar::top"></div>
+<div class="container-fluid">
+    <div class="row">
+        <!--引入侧边栏 使用th:replace="~{抽取片段的文件名路径::#id名}"-->
+        <div th:replace="~{bar/bar::side(active='dept')}"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <form th:action="@{/collect/update}" method="post">
+
+                <div class="form-group">
+                    <label>考生姓名</label>
+                    <input name="XM" type="text" class="form-control" th:value="${confirmInfo.getXM()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>性别</label><br/>
+                    <input name="XNDM" type="text" class="form-control" th:value="${confirmInfo.getXBDM()==1?'男':'女'}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>民族代码</label>
+                    <input name="MZDM" type="text" class="form-control" th:value="${confirmInfo.getMZDM()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>出生日期</label>
+                    <input name="CSRQ" th:value="${confirmInfo.getCSRQ()}" class="form-control" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>政治面貌代码</label>
+                    <input name="ZZMMDM" type="text" class="form-control" th:value="${confirmInfo.getZZMMDM()}" readonly>
+                </div>
+
+
+                <div class="form-group">
+                    <label>报考专业</label>
+                    <input name="BKLBDM" type="text" class="form-control" th:value="${confirmInfo.getBKLBDM()}" readonly>
+                </div>
+
+                <div id="selectdiv" class="form-group" style="display: none">
+                    <label style="color: #b21f2d">专业考试选择</label>
+                    <select class="form-control" name="exam" id="select2" >
+                        <option th:value="微积分" th:text="微积分" ></option>
+                        <option th:value="管理学" th:text="管理学" ></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>专业代号</label>
+                    <input name="ZYDH" type="text" class="form-control" th:value="${confirmInfo.getZYDH()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>专业名称</label>
+                    <input name="ZYMC" type="text" class="form-control" th:value="${confirmInfo.getZYMC()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>考试类型代码</label>
+                    <input name="KSLXDM" type="text" class="form-control" th:value="${confirmInfo.getKSLXDM()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>户口类型代码</label>
+                    <input name="HKLBDM" type="text" class="form-control" th:value="${confirmInfo.getHKLBDM()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>残疾证号</label>
+                    <input name="CJZH" type="text" class="form-control" th:value="${confirmInfo.getCJZH()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>考生特征标志</label>
+                    <input name="KSTZBZ" type="text" class="form-control" th:value="${confirmInfo.getKSTZBZ()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>残疾证号</label>
+                    <input name="CJZH" type="text" class="form-control" th:value="${confirmInfo.getCJZH()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>身份证号码</label>
+                    <input name="SDZH" type="text" class="form-control" th:value="${confirmInfo.getSFZH()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>邮件地址</label>
+                    <input name="YJDZ" type="text" class="form-control" th:value="${confirmInfo.getYJDZ()}" readonly>
+                </div>
+                <div class="form-group">
+                    <label>邮政编码</label>
+                    <input name="YZBM" type="text" class="form-control" th:value="${confirmInfo.getYZBM()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>收件人</label>
+                    <input name="SJR" type="text" class="form-control" th:value="${confirmInfo.getSJR()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>毕业类别代码</label>
+                    <input name="BYLBDM" type="text" class="form-control" th:value="${confirmInfo.getBYLBDM()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>毕业学校代码</label>
+                    <input name="BYXXDM" type="text" class="form-control" th:value="${confirmInfo.getBYXXDM()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>毕业学校名称</label>
+                    <input name="BYXXMC" type="text" class="form-control" th:value="${confirmInfo.getBYXXMC()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>毕业专业代码</label>
+                    <input name="BYZYDM" type="text" class="form-control" th:value="${confirmInfo.getBYZYDM()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>毕业专业名称</label>
+                    <input name="BYZYMC" type="text" class="form-control" th:value="${confirmInfo.getBYZYMC()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>志愿号</label>
+                    <input name="ZYH" type="text" class="form-control" th:value="${confirmInfo.getZYH()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>科类代码</label>
+                    <input name="KLDM" type="text" class="form-control" th:value="${confirmInfo.getKLDM()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>院校代号</label>
+                    <input name="YXDH" type="text" class="form-control" th:value="${confirmInfo.getYXDH()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>院校名称</label>
+                    <input name="YXMC" type="text" class="form-control" th:value="${confirmInfo.getYXMC()}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>本人联系方式</label>
+                    <input name="LXDH" type="text" class="form-control" th:value="${confirmInfo.getLXDH()}" readonly>
+                </div>
+
+
+                <div class="form-group">
+                    <label>户籍代码</label>
+                    <input name="HJDM" type="text" class="form-control" th:value="${confirmInfo.getHJDM()}" readonly>
+                </div>
+
+                <button type="submit" class="btn btn-primary">确认信息</button>
+            </form>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" th:src="@{/static/asserts/js/jquery-3.2.1.slim.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/asserts/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/asserts/js/bootstrap.min.js}"></script>
+
+<!-- Icons -->
+<script type="text/javascript" th:src="@{/static/asserts/js/feather.min.js}"></script>
+<script>
+    feather.replace()
+</script>
+
+<!-- Graphs -->
+<script type="text/javascript" th:src="@{/static/asserts/js/Chart.min.js}"></script>
+<script>
+    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            datasets: [{
+                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+                lineTension: 0,
+                backgroundColor: 'transparent',
+                borderColor: '#007bff',
+                borderWidth: 4,
+                pointBackgroundColor: '#007bff'
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: false
+                    }
+                }]
+            },
+            legend: {
+                display: false,
+            }
+        }
+    });
+</script>
+
+<script>
+    var select1 = document.getElementById("select1");
+    var selectdiv = document.getElementById("selectdiv");
+    select1.onchange = function(){
+        var options = select1.getElementsByTagName("option");
+        var options1 = select2.getElementsByTagName("option");
+        for(var i = 0; i < options.length; i++){
+            if(options[i].selected){
+                // alert(options[i].value)
+                // var divid = options[i].id.replace("option","div");
+                // var divs = document.getElementsByTagName("div");
+                // if (options[i]==select2){
+                //
+                // }
+                if(options[i].value =="工商管理" || options[i].value =="市场营销" ||options[i].value =="国际经济贸易" ||
+                    options[i].value =="会计学" || options[i].value =="财务管理" ||options[i].value =="金融工程" ||
+                    options[i].value =="工程造价" ||options[i].value =="工程管理" ||options[i].value =="国际经济与贸易"){
+                    selectdiv.style.display="block";
+                    // var options2 = select2.getElementsByTagName("option");
+                    // alert(options2[0].value);
+                }else {
+                    selectdiv.style.display="none";
+                    options1[0].value="无";
+                    options1[1].value="无";
+                }
+            }
+        }
+    }
+
+</script>
+</body>
+
+</html>

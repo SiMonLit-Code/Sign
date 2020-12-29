@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    #?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    username: root
+    password: 123456
+    hikari:
+      maximum-pool-size: 100     #连接池中允许的最大连接数。缺省值：10
+      minimum-idle: 20
+      idle-timeout: 600000
+      connection-timeout: 30000
+  #
+  messages:
+    basename: i18n/login
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+#mybatis:
+#  mapper-locations: classpath:mybatis/mapper/*.xml
+#  config-location: classpath:mybatis/mybatisconfig.xml
+server:
+  port: 9090
+  tomcat:
+    max-swallow-size: 100MB
+
+
+
+#path_url: http://117.40.249.5:9090
+notify_url: http://122.51.39.223:9090/payment/getpayResult
+
+jwt:
+  secret: "NCLG2019" #盐
+  validate: 30*60  #token过期时间
