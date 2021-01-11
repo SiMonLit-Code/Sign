@@ -1,7 +1,7 @@
 package com.sign.service.Impl;
 
 import com.sign.dao.RegisterDao;
-import com.sign.entity.Register;
+import com.sign.entity.User;
 import com.sign.jwt.JwtTokenUtils;
 import com.sign.service.IRegisterService;
 import com.sign.service.MyUserDetailsService;
@@ -24,45 +24,45 @@ public class RegisterServiceImpl implements IRegisterService {
     private MyUserDetailsService detailsService;
     @Autowired
     private RedisTemplate redisTemplate;
-    @Value("jwt.validate")
+    @Value("${jwt.validate}")
     private long validate;
     @Override
-    public boolean registerInsert(Register register) {
-        return registerDao.registerInsert(register);
+    public boolean registerInsert(User user) {
+        return registerDao.registerInsert(user);
     }
 
     @Override
-    public boolean registerFind(Register register) {
+    public boolean registerFind(User user) {
         //校验
-        UserDetails userDetails = detailsService.loadUserByUsername(register.getAccount());
+        UserDetails userDetails = detailsService.loadUserByUsername(user.getUsername());
         if (Objects.isNull(userDetails)){
             return false;
         }
         //生成token
-        String token = JwtTokenUtils.generateToken(register.getAccount());
+        String token = JwtTokenUtils.generateToken(user.getPassword());
         //token存入redis
-        redisTemplate.opsForValue().set(register.getAccount(), token,validate * 1000, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(user.getPassword(), token,validate * 1000, TimeUnit.SECONDS);
         return true;
     }
 
     @Override
-    public Integer registerFindAc(Register register) {
-        return registerDao.registerFindAc(register);
+    public Integer registerFindAc(User user) {
+        return registerDao.registerFindAc(user);
     }
 
     @Override
-    public List<Register> registerFindAll() {
+    public List<User> registerFindAll() {
         return registerDao.registerFindAll();
     }
 
     @Override
-    public Register registerFindById(String account) {
+    public User registerFindById(String account) {
         return registerDao.registerFindById(account);
     }
 
     @Override
-    public Integer registerUpdate(Register register) {
-        return registerDao.registerFindUpdate(register);
+    public Integer registerUpdate(User user) {
+        return registerDao.registerFindUpdate(user);
     }
 
 

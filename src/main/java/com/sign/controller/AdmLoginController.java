@@ -4,21 +4,16 @@ import com.alibaba.excel.EasyExcel;
 import com.sign.entity.*;
 import com.sign.service.*;
 import com.sign.utils.FilePathUtils;
-import com.sign.utils.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -197,7 +192,7 @@ public class AdmLoginController {
             model.addAttribute("Msgnull", "查无此人");
             return "emp/listcx";
         }
-        Register register = iRegisterService.registerFindById(id);
+        User user = iRegisterService.registerFindById(id);
         List<MZDM> mzdms = idmService.findMZDM();
         List<ZZMMDM> zzmmdms = idmService.findZZMMDM();
 
@@ -216,13 +211,13 @@ public class AdmLoginController {
             }
         }
         model.addAttribute("stu", stuAdd);
-        model.addAttribute("zh", register);
+        model.addAttribute("zh", user);
         return "emp/listId";
     }
 
     @PostMapping("/updatezh")
-    public String updateZh(Register register, Model model) {
-        Integer update = iRegisterService.registerUpdate(register);
+    public String updateZh(User user, Model model) {
+        Integer update = iRegisterService.registerUpdate(user);
         if (update == 1) {
             model.addAttribute("zhMsg", "修改成功");
         } else {

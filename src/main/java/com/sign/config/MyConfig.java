@@ -29,8 +29,8 @@ public class MyConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index");
-        registry.addViewController("/index.html").setViewName("index");
+//        registry.addViewController("/").setViewName("index");
+//        registry.addViewController("/index.html").setViewName("index");
         registry.addViewController("/main").setViewName("dashboard");
         registry.addViewController("/mainAd").setViewName("adminboard");
     }
@@ -43,15 +43,15 @@ public class MyConfig implements WebMvcConfigurer {
 //    }
 
     //注册拦截器
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**").excludePathPatterns("/returnAd","/adminUpdate","/adminUpdatePage","/payment/orderSubmit","/index.html","/","/loginStu","/enter","/loginAdm","/register","/login","/asserts/**");
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**").excludePathPatterns("/returnAd","/adminUpdate","/adminUpdatePage","/payment/orderSubmit","/index.html","/","/loginStu","/enter","/loginAdm","/register","/login","/asserts/**");
+//    }
 
     //写该方法目的是让自动配置失效，使用自己的配置
-    @Bean
-    public LocaleResolver localeResolver(){
-        return new MyLocaleResolver();
-    }
+//    @Bean
+//    public LocaleResolver localeResolver(){
+//        return new MyLocaleResolver();
+//    }
     
 }

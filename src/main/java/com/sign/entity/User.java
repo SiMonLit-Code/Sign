@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Register {
-    private String account;
-    private String pwd;
+public class User {
+    private String username;
+    private String password;
     private String role;
 }

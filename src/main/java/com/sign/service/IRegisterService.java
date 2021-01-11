@@ -1,21 +1,19 @@
 package com.sign.service;
 
-import com.sign.entity.Register;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
+import com.sign.entity.User;
 
 import java.util.List;
 
 public interface IRegisterService {
-    public boolean registerInsert(Register register);
+    boolean registerInsert(User user);
 
-    public boolean registerFind(Register register);
+    boolean registerFind(User user);
 
-    public Integer registerFindAc(Register register);
+    Integer registerFindAc(User user);
 
-    public List<Register> registerFindAll();
+    List<User> registerFindAll();
 
-    public Register registerFindById(String account);
+    User registerFindById(String account);
 
-    public Integer registerUpdate(Register register);
+    Integer registerUpdate(User user);
 }

@@ -1,10 +1,9 @@
 package com.sign.service;
 
 import com.sign.dao.RegisterDao;
-import com.sign.entity.Register;
+import com.sign.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,12 +23,12 @@ public class MyUserDetailsService implements UserDetailsService {
     private RegisterDao registerDao;
 
     @Override
-    public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
-        Register register = registerDao.registerFindById(account);
-        if (null == register){
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = registerDao.registerFindById(username);
+        if (null == user){
             return null;
         }
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(register.getRole());
-        return new User(register.getAccount(),register.getPwd(), Collections.singletonList(authority));
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.singletonList(authority));
     }
 }

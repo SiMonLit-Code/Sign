@@ -1,13 +1,14 @@
 package com.sign.controller;
 
-import com.sign.entity.Register;
+import com.sign.entity.User;
 import com.sign.service.IRegisterService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -56,42 +57,43 @@ public class LoginController {
     }
 
     //学生登陆
-    @PostMapping("/loginStu")
-    public ModelAndView loginStudent(@RequestBody Register register) {
+    /*@PostMapping("/loginStu")
+    public String loginStudent(@RequestBody User user) {
         ModelAndView mv = new ModelAndView();
 //        session.setMaxInactiveInterval(30);
-        if (iRegisterService.registerFind(register)) {
+        if (iRegisterService.registerFind(user)) {
             //密码正确，设置session
             mv.setViewName("redirect:/main");
+//            return "dashboard";
         } else {
             //密码错误返回登录页面
             mv.addObject("msg", "身份证或密码有误");
             mv.setViewName("index");
         }
-        return mv;
-    }
+        return "dashboard";
+    }*/
+
+
 
     //注册
     @PostMapping("/register")
-    public String registerInf(@RequestBody Register register, Model model) {
+    public String registerInf(@RequestBody User user, Model model, HttpServletRequest request) {
+        String repetitionPsw = request.getParameter("repetitionPsw");
 //        System.out.println("----------注册请求：----------");
-        if (!password.equals(register.getPwd())){
+        if (!repetitionPsw.equals(user.getPassword())){
             model.addAttribute("pwdmsgnum", "密码输入不一致");
             return "register";
         }
-        if (password.length()<6){
+        if (user.getPassword().length()<6){
             model.addAttribute("pwdmsglen", "密码长度6-12位");
             return "register";
         }
-//        session.setMaxInactiveInterval(30);
-        if (register.getAccount().length()!= 18) {
+        if (user.getUsername().length()!= 18) {
             model.addAttribute("acountmsgnum", "身份证位数有误");
             return "register";
         }
-//        System.out.println(register);
-//        System.out.println(iRegisterService.registerFind(register));
-        if (iRegisterService.registerFindAc(register) == 0) {
-            iRegisterService.registerInsert(register);
+        if (iRegisterService.registerFindAc(user) == 0) {
+            iRegisterService.registerInsert(user);
             return "index";
         } else {
             model.addAttribute("acountmsgcf", "身份证已被注册，有问题请联系管理员");

@@ -1,6 +1,6 @@
 package com.sign.dao;
 
-import com.sign.entity.Register;
+import com.sign.entity.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -11,20 +11,20 @@ import java.util.List;
 @Mapper
 public interface RegisterDao {
     @Insert("insert into register(account,pwd) value(#{account},#{pwd})")
-    boolean registerInsert(Register register);
+    boolean registerInsert(User user);
 
     @Select("select count(*) from register where account=#{account} and pwd=#{pwd}")
-    Integer registerFind(Register register);
+    Integer registerFind(User user);
 
     @Select("select count(*) from register where account=#{account} ")
-    Integer registerFindAc(Register register);
+    Integer registerFindAc(User user);
 
     @Select("select account from register")
-    List<Register> registerFindAll();
+    List<User> registerFindAll();
 
-    @Select("select * from register where account=#{account} ")
-    Register registerFindById(String account);
+    @Select("select * from sys_user where username=#{username} ")
+    User registerFindById(String username);
 
     @Update("update register set pwd=#{pwd} where account=#{account}")
-    Integer registerFindUpdate(Register register);
+    Integer registerFindUpdate(User user);
 }

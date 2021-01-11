@@ -37,13 +37,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                                     HttpServletResponse resp,
                                     FilterChain filterChain) throws ServletException, IOException {
         final String header = req.getHeader("Authorization");
-        String account = null;
+        String username = null;
         String jwtToken = null;
         //JWT报文头是"Bearer token",去除Bearer
         if (null != header && header.startsWith("Bearer")){
             jwtToken = header.substring(7);
             try{
-                account = JwtTokenUtils.getNameFromToken(jwtToken);
+                username = JwtTokenUtils.getNameFromToken(jwtToken);
             } catch (IllegalArgumentException e) {
                 System.out.println("Unable to get JWT Token");
             } catch (ExpiredJwtException e) {
@@ -53,9 +53,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             log.warn("JWT Token does not begin with Bearer String");
         }
 
-        //校验account
-        if (null != account && SecurityContextHolder.getContext().getAuthentication() == null){
-            UserDetails userDetails = detailsService.loadUserByUsername(account);
+        //校验username
+        if (null != username && SecurityContextHolder.getContext().getAuthentication() == null){
+            UserDetails userDetails = detailsService.loadUserByUsername(username);
             if (JwtTokenUtils.validateToken(jwtToken,userDetails)){
                 //授权用户
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
