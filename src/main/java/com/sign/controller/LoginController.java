@@ -56,9 +56,14 @@ public class LoginController {
         return "register";
     }
 
+    /**
+     * "Content-Type":application/x-www-form-urlencoded;charset=UTF-8 不需要加@RequestBody注解
+     * @param user
+     * @return
+     */
     //学生登陆
-    /*@PostMapping("/loginStu")
-    public String loginStudent(@RequestBody User user) {
+    @PostMapping(value = "/loginStu")
+    public ModelAndView loginStudent(User user) {
         ModelAndView mv = new ModelAndView();
 //        session.setMaxInactiveInterval(30);
         if (iRegisterService.registerFind(user)) {
@@ -70,8 +75,8 @@ public class LoginController {
             mv.addObject("msg", "身份证或密码有误");
             mv.setViewName("index");
         }
-        return "dashboard";
-    }*/
+        return mv;
+    }
 
 
 

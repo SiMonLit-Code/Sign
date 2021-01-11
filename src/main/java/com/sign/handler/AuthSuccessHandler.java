@@ -22,10 +22,9 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
         //处理登录成功逻辑
-        response.setHeader("Content-Type", "application/json;charset=utf-8");
-        String jsonStr = "{username:\"张三\",token:\"avasdaeawaweqwe123123asdad1231dasdasd\"}";
-        response.getWriter().print(jsonStr);
-        response.getWriter().flush();
+//        response.setHeader("Content-Type", "application/json;charset=utf-8");
+//        request.setAttribute("Content-Type","application/json;charset=utf-8");
+
         request.getRequestDispatcher(request.getRequestURI()).forward(request, response);
     }
 }

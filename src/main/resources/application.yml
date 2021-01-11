@@ -17,6 +17,8 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
+  redis:
+    host: 39.96.32.6
 #mybatis:
 #  mapper-locations: classpath:mybatis/mapper/*.xml
 #  config-location: classpath:mybatis/mybatisconfig.xml
@@ -26,12 +28,11 @@ server:
     max-swallow-size: 100MB
 
 
-
 #path_url: http://117.40.249.5:9090
 notify_url: http://122.51.39.223:9090/payment/getpayResult
 
-jwt:
-  #盐
-  secret: "NCLG2019"
-  #token过期时间
-  validate: 1800
+#jwt:
+#  #盐
+#  secret: "NCLG2019"
+#  #token过期时间
+#  validate: 1800

@@ -4,7 +4,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -17,12 +19,21 @@ import java.util.function.Function;
  * @create : 2020-12-29 15:16:00
  * @description : jwt生成token
  */
+@Component
 public class JwtTokenUtils {
-    @Value("jwt.secret")
     private static String secret ;
 
-    @Value("jwt.validate")
     private static long expiration;
+
+    @Value("${jwt.secret}")
+    public void setSecret(String secret) {
+        JwtTokenUtils.secret = secret;
+    }
+
+    @Value("${jwt.validate}")
+    public void setExpiration(long expiration) {
+        JwtTokenUtils.expiration = expiration;
+    }
 
     /**
      * 将从Token中Subject
@@ -53,7 +64,7 @@ public class JwtTokenUtils {
                 .setSubject(account)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+expiration))
-                .signWith(SignatureAlgorithm.ES256,secret)
+                .signWith(SignatureAlgorithm.HS256,secret)
                 .compact();
     }
 

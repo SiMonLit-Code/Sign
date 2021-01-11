@@ -39,9 +39,9 @@ public class RegisterServiceImpl implements IRegisterService {
             return false;
         }
         //生成token
-        String token = JwtTokenUtils.generateToken(user.getPassword());
+        String token = JwtTokenUtils.generateToken(user.getUsername());
         //token存入redis
-        redisTemplate.opsForValue().set(user.getPassword(), token,validate * 1000, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(user.getUsername(), token,validate * 1000, TimeUnit.SECONDS);
         return true;
     }
 

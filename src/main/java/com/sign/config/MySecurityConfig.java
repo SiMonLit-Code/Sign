@@ -2,6 +2,7 @@ package com.sign.config;
 
 import com.sign.component.JwtRequestFilter;
 import com.sign.exception.JwtAuthenticationPointException;
+import com.sign.handler.AuthSuccessHandler;
 import com.sign.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -35,29 +36,9 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyUserDetailsService detailsService;
 
-    /*@Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers().authenticated().and()
-                .formLogin().loginPage("/index").loginProcessingUrl("/loginStu").defaultSuccessUrl("/").permitAll()
-                // 设置登陆成功页
-                .and()
-                //设置权限不通过异常
-                .exceptionHandling().authenticationEntryPoint(jwtException).and()
-                //设置session无状态
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                //允许注册和登录的url
-                .authorizeRequests().antMatchers("/index","/loginStu").permitAll()
-//                .antMatchers("/main").hasAuthority("ROLE_ADMIN")
-//                .antMatchers("/dashboard.html").hasAuthority("ROLE_ADMIN").
-                .and()
+    @Autowired
+    private AuthSuccessHandler authSuccessHandler;
 
-                //设置过滤器
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-                //页面关闭
-                .headers().frameOptions().sameOrigin().cacheControl();
-
-        http.csrf().disable();
-    }*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -71,8 +52,9 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 //指定登录页的路径
                 .loginPage("/login")
                 //指定自定义form表单请求的路径
-                .loginProcessingUrl("/dashboard.html")
-                .defaultSuccessUrl("/success")
+                .loginProcessingUrl("/loginStu")
+                .successHandler(authSuccessHandler)
+//                .defaultSuccessUrl("/success")
                 .failureForwardUrl("/failure")
                 //这个formLogin().permitAll()方法允许所有用户基于表单登录访问/login这个page。
                 .permitAll().and()
