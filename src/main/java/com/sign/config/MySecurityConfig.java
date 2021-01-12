@@ -2,7 +2,10 @@ package com.sign.config;
 
 import com.sign.component.JwtRequestFilter;
 import com.sign.exception.JwtAuthenticationPointException;
+import com.sign.handler.AuthFailureHandler;
 import com.sign.handler.AuthSuccessHandler;
+import com.sign.service.IRedisService;
+import com.sign.service.IRegisterService;
 import com.sign.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -27,11 +30,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MySecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
-
-    @Autowired
-    private JwtAuthenticationPointException jwtException;
 
     @Autowired
     private MyUserDetailsService detailsService;
@@ -39,26 +37,35 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthSuccessHandler authSuccessHandler;
 
+    @Autowired
+    private AuthFailureHandler authFailureHandler;
+
+    @Autowired
+    private IRedisService iRedisService;
+
+    @Autowired
+    private IRegisterService iRegisterService;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .antMatchers("/login","/index.html").permitAll()
-                .antMatchers("/dashboard.html").hasAuthority("ROLE_ADMIN")
-                .anyRequest().authenticated()
-                .and()
                 .formLogin()
                 //指定登录页的路径
                 .loginPage("/login")
                 //指定自定义form表单请求的路径
                 .loginProcessingUrl("/loginStu")
                 .successHandler(authSuccessHandler)
-//                .defaultSuccessUrl("/success")
-                .failureForwardUrl("/failure")
-                //这个formLogin().permitAll()方法允许所有用户基于表单登录访问/login这个page。
-                .permitAll().and()
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                .failureHandler(authFailureHandler)
+                .permitAll()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/login","/index.html").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .addFilterBefore(new JwtRequestFilter(detailsService,iRedisService,iRegisterService), UsernamePasswordAuthenticationFilter.class);
+
+        //关闭跨域
         http .csrf().disable();
     }
 

@@ -63,7 +63,6 @@ public class JwtTokenUtils {
                 .setClaims(claim)
                 .setSubject(account)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+expiration))
                 .signWith(SignatureAlgorithm.HS256,secret)
                 .compact();
     }
@@ -74,7 +73,7 @@ public class JwtTokenUtils {
      */
     public static boolean validateToken(String token, UserDetails userDetails){
         String account = getNameFromToken(token);
-        return account.equals(userDetails.getUsername()) && !isTokenExpired(token);
+        return account.equals(userDetails.getUsername()) ;
     }
 
     /**

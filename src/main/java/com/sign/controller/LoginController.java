@@ -1,7 +1,10 @@
 package com.sign.controller;
 
 import com.sign.entity.User;
+import com.sign.jwt.JwtTokenUtils;
+import com.sign.service.IRedisService;
 import com.sign.service.IRegisterService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -22,6 +27,9 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
     @Resource
     IRegisterService iRegisterService;
+
+    @Autowired
+    IRedisService iRedisService;
 
 
     @PostMapping("/login")
@@ -58,26 +66,24 @@ public class LoginController {
 
     /**
      * "Content-Type":application/x-www-form-urlencoded;charset=UTF-8 不需要加@RequestBody注解
-     * @param user
      * @return
      */
     //学生登陆
     @PostMapping(value = "/loginStu")
-    public ModelAndView loginStudent(User user) {
+    public ModelAndView loginStudent(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
-//        session.setMaxInactiveInterval(30);
-        if (iRegisterService.registerFind(user)) {
-            //密码正确，设置session
+
+        String flag = (String) request.getAttribute("flag");
+        if ("true".equals(flag)) {
+            //正确登录
             mv.setViewName("redirect:/main");
-//            return "dashboard";
         } else {
             //密码错误返回登录页面
-            mv.addObject("msg", "身份证或密码有误");
+            mv.addObject("msg","身份证或密码错误");
             mv.setViewName("index");
         }
         return mv;
     }
-
 
 
     //注册

@@ -20,12 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class RegisterServiceImpl implements IRegisterService {
     @Resource
     private RegisterDao registerDao;
-    @Autowired
-    private MyUserDetailsService detailsService;
-    @Autowired
-    private RedisTemplate redisTemplate;
-    @Value("${jwt.validate}")
-    private long validate;
+
     @Override
     public boolean registerInsert(User user) {
         return registerDao.registerInsert(user);
@@ -34,15 +29,8 @@ public class RegisterServiceImpl implements IRegisterService {
     @Override
     public boolean registerFind(User user) {
         //校验
-        UserDetails userDetails = detailsService.loadUserByUsername(user.getUsername());
-        if (Objects.isNull(userDetails)){
-            return false;
-        }
-        //生成token
-        String token = JwtTokenUtils.generateToken(user.getUsername());
-        //token存入redis
-        redisTemplate.opsForValue().set(user.getUsername(), token,validate * 1000, TimeUnit.SECONDS);
-        return true;
+        User account = registerDao.registerFindById(user.getUsername());
+        return !Objects.isNull(account) && account.getPassword().equals(user.getPassword());
     }
 
     @Override

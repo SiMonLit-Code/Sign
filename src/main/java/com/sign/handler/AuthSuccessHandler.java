@@ -1,10 +1,14 @@
 package com.sign.handler;
 
+import com.sign.jwt.JwtTokenUtils;
+import com.sign.service.IRedisService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,13 +22,21 @@ import java.io.IOException;
 @Component
 public class AuthSuccessHandler implements AuthenticationSuccessHandler {
 
+    @Autowired
+    IRedisService iRedisService;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
         //处理登录成功逻辑
-//        response.setHeader("Content-Type", "application/json;charset=utf-8");
-//        request.setAttribute("Content-Type","application/json;charset=utf-8");
-
+        //密码正确，生成token，设置cookie
+        String username = request.getParameter("username");
+        String token = JwtTokenUtils.generateToken(username);
+        Cookie cookie = new Cookie("access_token", token);
+        response.addCookie(cookie);
+        //存入redis
+        iRedisService.saveToken(username,token);
+        request.setAttribute("flag","true");
         request.getRequestDispatcher(request.getRequestURI()).forward(request, response);
     }
 }
