@@ -1,21 +1,20 @@
 package com.sign.service;
 
 import com.sign.entity.Add;
-import com.sign.entity.Collect;
-import com.sign.vo.CollectVo;
-import org.apache.ibatis.annotations.Insert;
+import com.sign.entity.RegistrationForm;
+import com.sign.vo.RegistrationFormVo;
 
 import java.util.List;
 
 public interface ISignUpService {
-    public boolean insertStudent(CollectVo collect);
-    public boolean insertSecStudent(CollectVo collectVo);
+    public boolean insertStudent(RegistrationFormVo collect);
+    public boolean insertSecStudent(RegistrationFormVo collectVo);
 
-    public List<Collect> findStudent();
-    public Collect selectStudentById(String did);
-    public Integer updateStudent(CollectVo collect);
-    public Integer updateSecStudent(CollectVo collect);
-    public List<Collect> findStudentdId();
+    public List<RegistrationForm> findStudent();
+    public RegistrationForm selectStudentById(String did);
+    public Integer updateStudent(RegistrationFormVo collect);
+    public Integer updateSecStudent(RegistrationFormVo collect);
+    public List<RegistrationForm> findStudentdId();
 
     public List<Add> associationFind();
     public Add associationSecFind(String did);

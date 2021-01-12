@@ -48,41 +48,41 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         //从cookie中取出token
         String access_token = null;
-        if (null != req.getCookies()){
+        if (null != req.getCookies()) {
             for (Cookie cookie : req.getCookies()) {
-                if (cookie.getName().equals("access_token")){
+                if (cookie.getName().equals("access_token")) {
                     access_token = cookie.getValue();
                 }
             }
         }
 
 
-        if(null != access_token){
+        if (null != access_token) {
             String username = JwtTokenUtils.getNameFromToken(access_token);
-            if (iRedisService.validateAccessToken(username,access_token)){
-                filterChain.doFilter(req,resp);
+            if (iRedisService.validateAccessToken(username, access_token)) {
+                filterChain.doFilter(req, resp);
             }
         }
         String name = req.getParameter("username");
         //校验username
-        if (null != name && SecurityContextHolder.getContext().getAuthentication() == null){
+        if (null != name && SecurityContextHolder.getContext().getAuthentication() == null) {
 //            String username = JwtTokenUtils.getNameFromToken(access_token);
             UserDetails userDetails = detailsService.loadUserByUsername(name);
-            if (null != userDetails.getUsername()){
+            if (null != userDetails.getUsername()) {
                 //检验密码
                 String password = req.getParameter("password");
-                if (iRegisterService.registerFind(new User(name,password))){
+                if (iRegisterService.registerFind(new User(name, password))) {
                     //授权
-                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
 
                     //将授权成功的用户保存到SecurityContextHolder，交给SpringSecurity，可以全局获取到
                     SecurityContextHolder.getContext().setAuthentication(auth);
                 }
             }
-        }else {
+        } else {
             log.warn("username is null or AuthenticationObject is null");
         }
-        filterChain.doFilter(req,resp);
+        filterChain.doFilter(req, resp);
     }
 }

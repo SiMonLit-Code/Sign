@@ -22,7 +22,7 @@
 		<link th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
 		<style type="text/css">
 			/* Chart.js */
-			
+
 			@-webkit-keyframes chartjs-render-animation {
 				from {
 					opacity: 0.99
@@ -31,7 +31,7 @@
 					opacity: 1
 				}
 			}
-			
+
 			@keyframes chartjs-render-animation {
 				from {
 					opacity: 0.99
@@ -40,7 +40,7 @@
 					opacity: 1
 				}
 			}
-			
+
 			.chartjs-render-monitor {
 				-webkit-animation: chartjs-render-animation 0.001s;
 				animation: chartjs-render-animation 0.001s;
@@ -89,29 +89,29 @@
 							</thead>
 							<tbody>
 								<tr >
-									<td th:text="${stu.getCollect().getSid()}"></td>
-									<td th:text="${stu.getCollect().getSname()}"></td>
-									<td th:text="${stu.getCollect().getGender()}==1?'男':'女'"></td>
-									<td th:text="${stu.getCollect().getNation()}"></td>
-									<td th:text="${stu.getCollect().getBirth()}"></td>
+									<td th:text="${stu.getRegistrationForm().getSid()}"></td>
+									<td th:text="${stu.getRegistrationForm().getSname()}"></td>
+									<td th:text="${stu.getRegistrationForm().getGender()}==1?'男':'女'"></td>
+									<td th:text="${stu.getRegistrationForm().getNation()}"></td>
+									<td th:text="${stu.getRegistrationForm().getBirth()}"></td>
 									<td th:text="${stu.getCard()}"></td>
 									<td th:text="${stu.getSoldier()}"></td>
-									<td th:text="${stu.getCollect().getPc()}"></td>
-									<td th:text="${stu.getCollect().getCmajor()}"></td>
-									<td th:text="${stu.getCollect().getGmajor()}"></td>
+									<td th:text="${stu.getRegistrationForm().getPc()}"></td>
+									<td th:text="${stu.getRegistrationForm().getCmajor()}"></td>
+									<td th:text="${stu.getRegistrationForm().getGmajor()}"></td>
 									<td th:text="${stu.getExam()}"></td>
-									<td th:text="${stu.getCollect().getGid()}"></td>
+									<td th:text="${stu.getRegistrationForm().getGid()}"></td>
 									<td th:text="${stu.getDid()}"></td>
-									<td th:text="${stu.getCollect().getAddr()}"></td>
-									<td th:text="${stu.getCollect().getPos()}"></td>
-									<td th:text="${stu.getCollect().getPerson()}"></td>
-									<td th:text="${stu.getCollect().getParent()}"></td>
-									<td th:text="${stu.getCollect().getKid()}"></td>
-									<td th:text="${stu.getCollect().getCid()}"></td>
-									<td th:text="${stu.getCollect().getCname()}"></td>
-									<td th:text="${stu.getCollect().getNid()}"></td>
-									<td th:text="${stu.getCollect().getTname()}"></td>
-									<td th:text="${stu.getCollect().getTel()}"></td>
+									<td th:text="${stu.getRegistrationForm().getAddr()}"></td>
+									<td th:text="${stu.getRegistrationForm().getPos()}"></td>
+									<td th:text="${stu.getRegistrationForm().getPerson()}"></td>
+									<td th:text="${stu.getRegistrationForm().getParent()}"></td>
+									<td th:text="${stu.getRegistrationForm().getKid()}"></td>
+									<td th:text="${stu.getRegistrationForm().getCid()}"></td>
+									<td th:text="${stu.getRegistrationForm().getCname()}"></td>
+									<td th:text="${stu.getRegistrationForm().getNid()}"></td>
+									<td th:text="${stu.getRegistrationForm().getTname()}"></td>
+									<td th:text="${stu.getRegistrationForm().getTel()}"></td>
 <!--									<td>-->
 <!--										<form th:action="@{/update}"><button name="id" th:value="${}" type="submit" class="btn-outline-success" >修改</button></form>-->
 <!--										<form th:action="@{/del}"><button type="submit" name="id" th:value="${}" class="btn-outline-success" >删除</button></form>-->

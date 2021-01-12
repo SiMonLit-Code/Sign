@@ -1,7 +1,6 @@
 package com.sign.vo;
 
-import cn.hutool.core.lang.copier.SrcToDestCopier;
-import com.sign.entity.Collect;
+import com.sign.entity.RegistrationForm;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class CollectVo extends Collect {
+public class RegistrationFormVo extends RegistrationForm {
 
     private String card ;
     private String soldier ;

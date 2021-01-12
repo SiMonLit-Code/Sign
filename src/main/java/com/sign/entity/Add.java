@@ -15,5 +15,5 @@ public class Add {
     private String exam;
     private String card;
     private String soldier;
-    private Collect collect ;
+    private RegistrationForm registrationForm;
 }

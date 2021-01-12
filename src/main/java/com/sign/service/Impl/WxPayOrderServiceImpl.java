@@ -1,14 +1,13 @@
 package com.sign.service.Impl;
 
 import com.sign.dao.AddVoDao;
-import com.sign.entity.Collect;
+import com.sign.entity.RegistrationForm;
 import com.sign.service.WxPayOrderService;
 import com.sign.utils.DataJoinUtils;
 import com.sign.utils.FilePathUtils;
 import com.sign.utils.QRCodeUtil;
 import com.sign.vo.AddVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -103,19 +102,19 @@ public class WxPayOrderServiceImpl implements WxPayOrderService {
     private AddVoDao addVoDao ;
 
     @Override
-    public void queryAllOrder(List<Collect> collects) {
+    public void queryAllOrder(List<RegistrationForm> registrationForms) {
 
         Map<String,String> map = null ;
         List<AddVo> addVos = new ArrayList<>() ;
-        for (Collect collect : collects) {
+        for (RegistrationForm registrationForm : registrationForms) {
             try {
-                map = payOrderService.orderQuery(collect.getDid()) ;
+                map = payOrderService.orderQuery(registrationForm.getDid()) ;
                 String status = map.get("trade_state_desc");//订单状态信息
                 if (status == null){
                     continue;
                 }
                 String payDate = map.get("time_end") ;
-                addVoDao.insert(new AddVo(collect.getDid() , status , payDate)) ;
+                addVoDao.insert(new AddVo(registrationForm.getDid() , status , payDate)) ;
             } catch (Exception e) {
                 e.printStackTrace();
             }

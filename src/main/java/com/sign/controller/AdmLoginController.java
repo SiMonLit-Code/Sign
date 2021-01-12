@@ -90,25 +90,25 @@ public class AdmLoginController {
     @GetMapping("/Adxinxi")
     public ModelAndView adXinxi() {
         ModelAndView mv = new ModelAndView();
-//        List<Collect> stus = iSignUpService.findStudent();
+//        List<RegistrationForm> stus = iSignUpService.findStudent();
         List<Add> addStus=iSignUpService.associationFind();
         List<MZDM> mzdms = idmService.findMZDM();
         List<ZZMMDM> zzmmdms = idmService.findZZMMDM();
 
         for (Add stu :
                 addStus) {
-            if(stu.getCollect()!=null){
+            if(stu.getRegistrationForm()!=null){
                 for (MZDM mzdm :
                         mzdms) {
-                    if (stu.getCollect().getNation().equals(mzdm.getMzdm())) {
-                        stu.getCollect().setNation(mzdm.getMzmc());
+                    if (stu.getRegistrationForm().getNation().equals(mzdm.getMzdm())) {
+                        stu.getRegistrationForm().setNation(mzdm.getMzmc());
                         break;
                     }
                 }
                 for (ZZMMDM zzmmdm :
                         zzmmdms) {
-                    if (stu.getCollect().getPc().equals(zzmmdm.getZzmmdm())) {
-                        stu.getCollect().setPc(zzmmdm.getZzmmmc());
+                    if (stu.getRegistrationForm().getPc().equals(zzmmdm.getZzmmdm())) {
+                        stu.getRegistrationForm().setPc(zzmmdm.getZzmmmc());
                         break;
                     }
                 }
@@ -132,27 +132,27 @@ public class AdmLoginController {
 //        String fileName = request.getParameter("fpath");
 //        System.out.println(fileName);
         String filepath="\\static\\files\\";
-        List<Collect> collects = iSignUpService.findStudent();
+        List<RegistrationForm> registrationForms = iSignUpService.findStudent();
         List<Add> addList=iSignUpService.associationFind();
         Map<String,String> map = null ;
 
-        for (Collect collect:
-                collects) {
+        for (RegistrationForm registrationForm :
+                registrationForms) {
             try {
-                map = payOrderService.orderQuery(collect.getDid()) ;
+                map = payOrderService.orderQuery(registrationForm.getDid()) ;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            collect.setPay(map.get("trade_state_desc"));
+            registrationForm.setPay(map.get("trade_state_desc"));
         }
         for (Add add:
              addList) {
-            for (Collect collect:
-            collects){
-                if (add.getDid().equals(collect.getDid())){
-                    collect.setCard(add.getCard());
-                    collect.setExam(add.getExam());
-                    collect.setSoldier(add.getSoldier());
+            for (RegistrationForm registrationForm :
+                    registrationForms){
+                if (add.getDid().equals(registrationForm.getDid())){
+                    registrationForm.setCard(add.getCard());
+                    registrationForm.setExam(add.getExam());
+                    registrationForm.setSoldier(add.getSoldier());
                 }
             }
         }
@@ -160,7 +160,7 @@ public class AdmLoginController {
 
 //        String fileName="C:\\nclg.xls";
 
-        EasyExcel.write(FilePathUtils.getFileName(filepath)+"nclg.xls", CollectExcl.class).sheet("南昌理工考生信息").doWrite(collects);
+        EasyExcel.write(FilePathUtils.getFileName(filepath)+"nclg.xls", CollectExcl.class).sheet("南昌理工考生信息").doWrite(registrationForms);
 
 //        try {
 //
@@ -185,9 +185,9 @@ public class AdmLoginController {
     @PostMapping("/cxId")
     public String xcId(Model model, HttpServletRequest request) {
         String id = request.getParameter("id");
-//        Collect stu = iSignUpService.selectStudentById(id);
+//        RegistrationForm stu = iSignUpService.selectStudentById(id);
         Add stuAdd=iSignUpService.associationSecFind(id);
-        System.out.println(stuAdd.getCollect());
+        System.out.println(stuAdd.getRegistrationForm());
         if(stuAdd==null){
             model.addAttribute("Msgnull", "查无此人");
             return "emp/listcx";
@@ -198,15 +198,15 @@ public class AdmLoginController {
 
         for (MZDM mzdm :
                 mzdms) {
-            if (stuAdd.getCollect().getNation().toString().equals(mzdm.getMzdm())) {
-                stuAdd.getCollect().setNation(mzdm.getMzmc());
+            if (stuAdd.getRegistrationForm().getNation().toString().equals(mzdm.getMzdm())) {
+                stuAdd.getRegistrationForm().setNation(mzdm.getMzmc());
                 break;
             }
         }
         for (ZZMMDM zzmmdm :
                 zzmmdms) {
-            if (stuAdd.getCollect().getPc().toString().equals(zzmmdm.getZzmmdm())) {
-                stuAdd.getCollect().setPc(zzmmdm.getZzmmmc());
+            if (stuAdd.getRegistrationForm().getPc().toString().equals(zzmmdm.getZzmmdm())) {
+                stuAdd.getRegistrationForm().setPc(zzmmdm.getZzmmmc());
                 break;
             }
         }

@@ -50,10 +50,10 @@
 
     <ul class="nav nav-pills">
         <li style="margin-right: 30px" role="presentation" class="active"><a th:href="@{/main}">主页面</a></li>
-        <li style="margin-right: 30px" role="presentation"><a th:href="@{/collect/ksbm}">考生报名</a></li>
-        <li style="margin-right: 30px" role="presentation"><a th:href="@{/collect/xg}">信息修改</a></li>
-        <li style="margin-right: 30px" role="presentation"><a th:href="@{/collect/zp}">照片上传</a></li>
-        <li style="margin-right: 30px" role="presentation"><a th:href="@{/collect/xinxi}">信息查询</a></li>
+        <li style="margin-right: 30px" role="presentation"><a th:href="@{/registration/ksbm}">考生报名</a></li>
+        <li style="margin-right: 30px" role="presentation"><a th:href="@{/registration/xg}">信息修改</a></li>
+        <li style="margin-right: 30px" role="presentation"><a th:href="@{/registration/zp}">照片上传</a></li>
+        <li style="margin-right: 30px" role="presentation"><a th:href="@{/registration/xinxi}">信息查询</a></li>
         <li style="margin-right: 30px" role="presentation"><a th:href="@{/payment/order}">缴费入口</a></li>
     </ul>
 
@@ -82,7 +82,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a th:class="${active=='emp'?'nav-link active':'nav-link'}" th:href="@{/collect/ksbm}">
+                        <a th:class="${active=='emp'?'nav-link active':'nav-link'}" th:href="@{/registrationForm/ksbm}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                  stroke-linejoin="round" class="feather feather-users">
@@ -97,7 +97,7 @@
 
 
                     <li class="nav-item">
-                        <a th:class="${active=='dept'?'nav-link active':'nav-link'}" th:href="@{/collect/xg}">
+                        <a th:class="${active=='dept'?'nav-link active':'nav-link'}" th:href="@{/registrationForm/xg}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                  stroke-linejoin="round" class="feather feather-bar-chart-2">
@@ -109,7 +109,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a th:class="${active=='zp'?'nav-link active':'nav-link'}" th:href="@{/collect/zp}">
+                        <a th:class="${active=='zp'?'nav-link active':'nav-link'}" th:href="@{/registrationForm/zp}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                  stroke-linejoin="round" class="feather feather-layers">
@@ -121,7 +121,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a th:class="${active=='xx'?'nav-link active':'nav-link'}" th:href="@{/collect/xinxi}">
+                        <a th:class="${active=='xx'?'nav-link active':'nav-link'}" th:href="@{/registrationForm/xinxi}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                  stroke-linejoin="round" class="feather feather-file">

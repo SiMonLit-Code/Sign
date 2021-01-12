@@ -1,12 +1,10 @@
 package com.sign.controller;
 
-import com.alibaba.excel.EasyExcel;
 import com.sign.dao.SignUpDao;
 import com.sign.entity.*;
 import com.sign.service.IRegisterService;
 import com.sign.service.ISignUpService;
 import com.sign.service.WxPayOrderService;
-import com.sign.vo.CollectVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -14,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +22,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.DoubleToIntFunction;
 
 /**
  * @author 周志通
@@ -81,7 +77,7 @@ public class WyPayOrderController {
     public String order(HttpServletRequest request){
         HttpSession session=request.getSession();
         String id= (String) session.getAttribute("id");
-        Collect student = iSignUpService.selectStudentById((String) session.getAttribute("id"));
+        RegistrationForm student = iSignUpService.selectStudentById((String) session.getAttribute("id"));
         if (student == null) {
             System.out.println("请先报名");
             return "emp/updatefalse";
@@ -100,7 +96,7 @@ public class WyPayOrderController {
     public String order(Product product, HttpServletRequest request, HttpServletResponse response,Model model) throws Exception{
         HttpSession session=request.getSession();
         String id= (String) session.getAttribute("id");
-//        Collect student = iSignUpService.selectStudentById((String) session.getAttribute("id"));
+//        RegistrationForm student = iSignUpService.selectStudentById((String) session.getAttribute("id"));
 //        if (student == null) {
 //            System.out.println("请先报名");
 //            return "emp/updatefalse";
@@ -130,19 +126,19 @@ public class WyPayOrderController {
 //        String fileName = request.getParameter("payfile");
 //        System.out.println(fileName);
 //        List<Product> products=new ArrayList<>();
-//        List<Collect> collects=iSignUpService.findStudentdId();
+//        List<RegistrationForm> collects=iSignUpService.findStudentdId();
 //        System.out.println(collects);
 //        Map<String,String> map = null ;
-//        for (Collect collect:
+//        for (RegistrationForm registrationForm:
 //                collects) {
 //            Product product=new Product();
 //            try {
-//                map = payOrderService.orderQuery(collect.getDid()) ;
+//                map = payOrderService.orderQuery(registrationForm.getDid()) ;
 //            } catch (Exception e) {
 //                e.printStackTrace();
 //            }
-//            product.setRemark(collect.getSid().toString());
-//            product.setOrderNo(collect.getDid());//订单号
+//            product.setRemark(registrationForm.getSid().toString());
+//            product.setOrderNo(registrationForm.getDid());//订单号
 //            product.setPrice(map.get("trade_state_desc")); //订单状态信息
 //            System.out.println(product);
 //            if (product!=null){
@@ -157,8 +153,8 @@ public class WyPayOrderController {
     //查询所有
     @RequestMapping("/orderQueryAll")
     public String orderQueryAll(){
-        List<Collect> collects = iSignUpService.findStudentdId();
-        payOrderService.queryAllOrder(collects) ;
+        List<RegistrationForm> registrationForms = iSignUpService.findStudentdId();
+        payOrderService.queryAllOrder(registrationForms) ;
         return "redirect:/payment/orderQueryAd" ;
     }
 
@@ -171,26 +167,26 @@ public class WyPayOrderController {
     public String orderQueryAd(Model model){
 //        List<Register> accounts=iRegisterService.registerFindAll();
       /*  List<Product> products=new ArrayList<>();
-        List<Collect> collects=iSignUpService.findStudentdId();
+        List<RegistrationForm> collects=iSignUpService.findStudentdId();
         System.out.println(collects);
         Map<String,String> map = null ;
-        for (Collect collect:
+        for (RegistrationForm registrationForm:
              collects) {
             Product product=new Product();
             try {
-                map = payOrderService.orderQuery(collect.getDid()) ;
+                map = payOrderService.orderQuery(registrationForm.getDid()) ;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-//            for (Collect collect:
+//            for (RegistrationForm registrationForm:
 //                 collects) {
-//                if (collect.getDid()==(register.getAccount().toString())){
-//                    product.setRemark(collect.getSid().toString());
+//                if (registrationForm.getDid()==(register.getAccount().toString())){
+//                    product.setRemark(registrationForm.getSid().toString());
 //                    break;
 //                }
 //            }
-            product.setRemark(collect.getSid().toString());
-            product.setOrderNo(collect.getDid());//订单号
+            product.setRemark(registrationForm.getSid().toString());
+            product.setOrderNo(registrationForm.getDid());//订单号
             product.setPrice(map.get("trade_state_desc")); //订单状态信息
 //            System.out.println(product);
             if (product!=null){
@@ -210,7 +206,7 @@ public class WyPayOrderController {
         List<Add> adds = signUpDao.associationFind();
         List<Product> products=new ArrayList<>();
         for (Add add : adds){
-            products.add(new Product(add.getDid() , ""+add.getCollect().getSid() ,add.getPay())) ;
+            products.add(new Product(add.getDid() , ""+add.getRegistrationForm().getSid() ,add.getPay())) ;
         }
         model.addAttribute("products" ,products) ;
         return "emp/zfAd" ;
@@ -257,8 +253,8 @@ public class WyPayOrderController {
 //        }else {
 //            System.out.println("查询失败，原因："+map.get("err_code_des"));
 //        }
-        Collect collect=iSignUpService.selectStudentById(id);
-        product.setRemark(collect.getSid().toString());
+        RegistrationForm registrationForm =iSignUpService.selectStudentById(id);
+        product.setRemark(registrationForm.getSid().toString());
         product.setOrderNo(id);//订单号
         product.setPrice(map.get("trade_state_desc")); //订单状态信息
         if (product!=null){

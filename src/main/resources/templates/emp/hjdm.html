@@ -22,7 +22,7 @@
 		<link th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
 		<style type="text/css">
 			/* Chart.js */
-			
+
 			@-webkit-keyframes chartjs-render-animation {
 				from {
 					opacity: 0.99
@@ -31,7 +31,7 @@
 					opacity: 1
 				}
 			}
-			
+
 			@keyframes chartjs-render-animation {
 				from {
 					opacity: 0.99
@@ -40,7 +40,7 @@
 					opacity: 1
 				}
 			}
-			
+
 			.chartjs-render-monitor {
 				-webkit-animation: chartjs-render-animation 0.001s;
 				animation: chartjs-render-animation 0.001s;
@@ -58,13 +58,13 @@
 					<div class="table-responsive" >
 <!--						<div style="width:5000px; overflow:scroll;">-->
 							<p style="color: red" th:if="${not #strings.isEmpty(likeMsg)}" th:text="${likeMsg}"></p>
-						<form method="post" action="/collect/like">
+						<form method="post" action="/registrationForm/like">
 							<label>请输入查询的户籍名称</label>
 							<input name="like" type="text" required="">
 							<input type="submit" value="查询">
 
 						</form>
-						<a href="/collect/hjdm">显示全部</a>
+						<a href="/registrationForm/hjdm">显示全部</a>
 						<table class="table table-striped table-sm">
 							<thead>
 								<tr>

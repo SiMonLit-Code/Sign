@@ -1,6 +1,6 @@
 package com.sign.service;
 
-import com.sign.entity.Collect;
+import com.sign.entity.RegistrationForm;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,9 +52,9 @@ public interface WxPayOrderService {
 
     /**
      * 查询所有订单消息
-     * @param collects 订单编号集合
+     * @param registrationForms 订单编号集合
      */
-    void queryAllOrder(List<Collect> collects) ;
+    void queryAllOrder(List<RegistrationForm> registrationForms) ;
 
 
 }

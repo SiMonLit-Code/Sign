@@ -26,19 +26,19 @@
             <td hidden></td>
         </tr>
         <tr height="50">
-            <td align="center" th:text="${collect.getSName()}"></td>
-            <td align="center" th:text="${collect.getGender()}==0?'女':'男'"></td>
-            <td align="center" th:text="${collect.getNation()}"></td>
-            <td align="center" th:text="${#dates.format(collect.getBirth(),'yyyy年MM月dd日')}"></td>
-            <td align="center" th:text="${collect.getPc()}"></td>
+            <td align="center" th:text="${registrationForm.getSName()}"></td>
+            <td align="center" th:text="${registrationForm.getGender()}==0?'女':'男'"></td>
+            <td align="center" th:text="${registrationForm.getNation()}"></td>
+            <td align="center" th:text="${#dates.format(registrationForm.getBirth(),'yyyy年MM月dd日')}"></td>
+            <td align="center" th:text="${registrationForm.getPc()}"></td>
         </tr>
         <tr height="50">
             <td colspan="2" align="center">身份证号</td>
-            <td colspan="3" th:text="${collect.getDId()}"></td>
+            <td colspan="3" th:text="${registrationForm.getDId()}"></td>
         </tr>
         <tr height="50">
             <td colspan="2" align="center">高考考生号</td>
-            <td colspan="3" th:text="${collect.getGId()}"></td>
+            <td colspan="3" th:text="${registrationForm.getGId()}"></td>
         </tr>
         </thead>
         <tbody>
@@ -46,19 +46,19 @@
             <td colspan="2" align="center">专科毕业学校</td>
             <td width="180"></td>
             <td colspan="2" align="center">专科所学专业</td>
-            <td width="180" colspan="2" th:text="${collect.getCMajor()}"></td>
+            <td width="180" colspan="2" th:text="${registrationForm.getCMajor()}"></td>
         </tr>
         <tr height="35">
             <td colspan="2" align="center">本人详细通信地址</td>
-            <td colspan="3" th:text="${collect.getAddr()}"></td>
+            <td colspan="3" th:text="${registrationForm.getAddr()}"></td>
             <td width="100" align="center">邮编</td>
-            <td width="100" th:text="${collect.getPos()}"></td>
+            <td width="100" th:text="${registrationForm.getPos()}"></td>
         </tr>
         <tr height="35">
             <td colspan="2" align="center">联系电话</td>
-            <td width="180" th:text="${collect.getPerson()}"></td>
+            <td width="180" th:text="${registrationForm.getPerson()}"></td>
             <td colspan="2" align="center">家庭联系电话</td>
-            <td width="180" colspan="2" th:text="${collect.getParent()}"></td>
+            <td width="180" colspan="2" th:text="${registrationForm.getParent()}"></td>
         </tr>
         <tr height="35">
             <td colspan="2" align="center">专科综合测评</td>

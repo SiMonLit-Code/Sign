@@ -1,7 +1,5 @@
 package com.sign.vo;
 
-import com.sign.entity.Add;
-import com.sign.entity.Collect;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

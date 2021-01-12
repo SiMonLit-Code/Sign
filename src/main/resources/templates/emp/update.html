@@ -52,7 +52,7 @@
         <!--引入侧边栏 使用th:replace="~{抽取片段的文件名路径::#id名}"-->
         <div th:replace="~{bar/bar::side(active='dept')}"></div>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            <form th:action="@{/collect/update}" method="post">
+            <form th:action="@{/registrationForm/update}" method="post">
                 <!--                <div class="form-group">-->
                 <!--                    <label>考生报名序号（不可修改）</label>-->
                 <input hidden="hidden" name="sid" type="text" class="form-control" th:value="${student.getSid()}" >
@@ -192,7 +192,7 @@
                 <!--                    <input name="cName" type="text" class="form-control"  th:value="${student.getCname()}" required="">-->
                 <!--                </div>-->
                 <div class="form-group">
-                    <label>户籍代码</label> <a href="/collect/hjdm" target="_blank">户籍代码查询</a>
+                    <label>户籍代码</label> <a href="/registrationForm/hjdm" target="_blank">户籍代码查询</a>
                     <input name="nid" type="text" class="form-control" th:value="${student.getNid()}" required="" maxlength="6">
                 </div>
                 <div class="form-group">

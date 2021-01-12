@@ -18,7 +18,7 @@ public interface DMDao {
     @Select("select * from byxxdm")
     public List<BYXXDM> findBYXXDM();
 
-    //    @Select("SELECT * FROM collect into outfile 'D:/Uploads/nclg.xls' character set gbk")
+    //    @Select("SELECT * FROM registrationForm into outfile 'D:/Uploads/nclg.xls' character set gbk")
 //    public void fileLoad(String fname);
     @Select("select * from hjdm")
     public List<HJDM> findHJDM();
