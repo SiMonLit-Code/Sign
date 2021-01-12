@@ -58,13 +58,13 @@
 					<div class="table-responsive" >
 <!--						<div style="width:5000px; overflow:scroll;">-->
 							<p style="color: red" th:if="${not #strings.isEmpty(likeMsg)}" th:text="${likeMsg}"></p>
-						<form method="post" action="/registrationForm/like">
+						<form method="post" action="/registration/like">
 							<label>请输入查询的户籍名称</label>
 							<input name="like" type="text" required="">
 							<input type="submit" value="查询">
 
 						</form>
-						<a href="/registrationForm/hjdm">显示全部</a>
+						<a href="/registration/hjdm">显示全部</a>
 						<table class="table table-striped table-sm">
 							<thead>
 								<tr>

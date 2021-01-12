@@ -90,29 +90,29 @@
 							</thead>
 							<tbody>
 								<tr th:each="stu:${stus}">
-									<td th:text="${stu.getRegistrationForm().getSid()}"></td>
-									<td th:text="${stu.getRegistrationForm().getSname()}"></td>
-									<td th:text="${stu.getRegistrationForm().getGender()}==1?'男':'女'"></td>
-									<td th:text="${stu.getRegistrationForm().getNation()}"></td>
-									<td th:text="${stu.getRegistrationForm().getBirth()}"></td>
+									<td th:text="${stu.getregistration().getSid()}"></td>
+									<td th:text="${stu.getregistration().getSname()}"></td>
+									<td th:text="${stu.getregistration().getGender()}==1?'男':'女'"></td>
+									<td th:text="${stu.getregistration().getNation()}"></td>
+									<td th:text="${stu.getregistration().getBirth()}"></td>
 									<td th:text="${stu.getCard()}"></td>
 									<td th:text="${stu.getSoldier()}"></td>
-									<td th:text="${stu.getRegistrationForm().getPc()}"></td>
-									<td th:text="${stu.getRegistrationForm().getCmajor()}"></td>
-									<td th:text="${stu.getRegistrationForm().getGmajor()}"></td>
+									<td th:text="${stu.getregistration().getPc()}"></td>
+									<td th:text="${stu.getregistration().getCmajor()}"></td>
+									<td th:text="${stu.getregistration().getGmajor()}"></td>
 									<td th:text="${stu.getExam()}"></td>
-									<td th:text="${stu.getRegistrationForm().getGid()}"></td>
+									<td th:text="${stu.getregistration().getGid()}"></td>
 									<td th:text="${stu.getDid()}"></td>
-									<td th:text="${stu.getRegistrationForm().getAddr()}"></td>
-									<td th:text="${stu.getRegistrationForm().getPos()}"></td>
-									<td th:text="${stu.getRegistrationForm().getPerson()}"></td>
-									<td th:text="${stu.getRegistrationForm().getParent()}"></td>
-									<td th:text="${stu.getRegistrationForm().getKid()}"></td>
-									<td th:text="${stu.getRegistrationForm().getCid()}"></td>
-									<td th:text="${stu.getRegistrationForm().getCname()}"></td>
-									<td th:text="${stu.getRegistrationForm().getNid()}"></td>
-									<td th:text="${stu.getRegistrationForm().getTname()}"></td>
-									<td th:text="${stu.getRegistrationForm().getTel()}"></td>
+									<td th:text="${stu.getregistration().getAddr()}"></td>
+									<td th:text="${stu.getregistration().getPos()}"></td>
+									<td th:text="${stu.getregistration().getPerson()}"></td>
+									<td th:text="${stu.getregistration().getParent()}"></td>
+									<td th:text="${stu.getregistration().getKid()}"></td>
+									<td th:text="${stu.getregistration().getCid()}"></td>
+									<td th:text="${stu.getregistration().getCname()}"></td>
+									<td th:text="${stu.getregistration().getNid()}"></td>
+									<td th:text="${stu.getregistration().getTname()}"></td>
+									<td th:text="${stu.getregistration().getTel()}"></td>
 <!--									<td>-->
 <!--										<form th:action="@{/update}"><button name="id" th:value="${}" type="submit" class="btn-outline-success" >修改</button></form>-->
 <!--										<form th:action="@{/del}"><button type="submit" name="id" th:value="${}" class="btn-outline-success" >删除</button></form>-->

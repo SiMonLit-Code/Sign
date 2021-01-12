@@ -13,7 +13,7 @@
 <!--    </div>-->
     <div align="center" style="margin-bottom: 20px">
         <label align="center" style="margin-right: 50px">报考学校：南昌理工学院</label>
-        <label >报考专业：</label><label th:text="${registrationForm.getGmajor()}"></label>
+        <label >报考专业：</label><label th:text="${collect.getGmajor()}"></label>
     </div>
     <table  align="center" width="1000" style="border: black;width: 90%" border="1" cellspacing=0 cellpadding=0 >
 
@@ -30,39 +30,39 @@
             <td hidden></td>
         </tr>
         <tr height="50">
-            <td align="center"  th:text="${registrationForm.getSname()}"></td>
-            <td align="center"  th:text="${registrationForm.getGender()}==2?'女':'男'"></td>
+            <td align="center"  th:text="${collect.getSname()}"></td>
+            <td align="center"  th:text="${collect.getGender()}==2?'女':'男'"></td>
             <td align="center"  th:text="${mz}"></td>
-            <td align="center"  th:text="${registrationForm.getBirth()}"></td>
+            <td align="center"  th:text="${collect.getBirth()}"></td>
             <td align="center"  th:text="${zz}"></td>
         </tr>
         <tr height="50">
             <td colspan="2" align="center">身份证号</td>
-            <td colspan="3" th:text="${registrationForm.getDid()}" align="center"></td>
+            <td colspan="3" th:text="${collect.getDid()}" align="center"></td>
         </tr>
         <tr height="50">
             <td colspan="2" align="center">高考考生号</td>
-            <td colspan="3" th:text="${registrationForm.getGid()}" align="center"></td>
+            <td colspan="3" th:text="${collect.getGid()}" align="center"></td>
         </tr>
         </thead>
         <tbody>
         <tr height="35">
             <td colspan="2" align="center">专科毕业学校</td>
-            <td width="180" align="center" th:text="${registrationForm.getCname()}"></td>
+            <td width="180" align="center" th:text="${collect.getCname()}"></td>
             <td colspan="2" align="center" >专科所学专业</td>
-            <td width="180" colspan="2" align="center" th:text="${registrationForm.getCmajor()}" ></td>
+            <td width="180" colspan="2" align="center" th:text="${collect.getCmajor()}" ></td>
         </tr>
         <tr height="35">
             <td colspan="2" align="center">本人详细通信地址</td>
-            <td colspan="3" th:text="${registrationForm.getAddr()}" align="center"></td>
+            <td colspan="3" th:text="${collect.getAddr()}" align="center"></td>
             <td width="100" align="center">邮编</td>
-            <td width="100" th:text="${registrationForm.getPos()}" align="center"></td>
+            <td width="100" th:text="${collect.getPos()}" align="center"></td>
         </tr>
         <tr height="35">
             <td colspan="2" align="center">联系电话</td>
-            <td width="180" th:text="${registrationForm.getPerson()}" align="center"></td>
+            <td width="180" th:text="${collect.getPerson()}" align="center"></td>
             <td colspan="2" align="center">家庭联系电话</td>
-            <td width="180" colspan="2" th:text="${registrationForm.getParent()}" align="center"></td>
+            <td width="180" colspan="2" th:text="${collect.getParent()}" align="center"></td>
         </tr>
         <tr height="35">
             <td colspan="2" align="center">专科综合测评</td>
@@ -111,6 +111,6 @@
     </table>
 </div>
 <div align="center" id="foot">注：本表一式三份，推荐高校、招生高校、学生本人档案各存一份</div>
-<a align="center" href="/registrationForm/return">返回主页</a>
+<a align="center" href="/registration/return">返回主页</a>
 </body>
 </html>
