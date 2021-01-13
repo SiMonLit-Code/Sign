@@ -1,10 +1,13 @@
 package com.sign.controller;
 
+import com.sign.constant.ExamInformation;
 import com.sign.entity.User;
 import com.sign.service.IRedisService;
 import com.sign.service.IRegisterService;
 import com.sign.utils.LoginAndRegisterUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,6 +68,7 @@ public class LoginAndRegisterController {
     //学生登陆
     @PostMapping(value = "/loginStu")
     public ModelAndView loginStudent(HttpServletRequest request) {
+        ExamInformation.userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String flag = (String) request.getAttribute("flag");
         return LoginAndRegisterUtil.loginStatusInf(flag);
     }

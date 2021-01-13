@@ -33,7 +33,7 @@ public class ExamInformation {
     /** 户籍代码 */
     public static List<HJDM> censusRegister  = new ArrayList<>();
 
-    public static UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public static UserDetails userDetails ;
     @PostConstruct
     private void ExamInformationInit(){
         ExamInformation.nationCode = idmService.findMZDM();

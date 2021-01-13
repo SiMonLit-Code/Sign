@@ -147,8 +147,7 @@ public class SignUpController {
     @GetMapping("/zp")
     public String zp(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
-        System.out.println(session.getAttribute("id"));
-        RegistrationFormAddition addstudent = iSignUpService.associationSecFind((String) session.getAttribute("id"));
+        RegistrationFormAddition addstudent = iSignUpService.associationSecFind(ExamInformation.userDetails.getUsername());
         if (addstudent == null) {
             System.out.println("请先报名");
             return "emp/updatefalse";

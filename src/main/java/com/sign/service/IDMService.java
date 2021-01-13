@@ -7,16 +7,16 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 public interface IDMService {
-    public List<MZDM> findMZDM();
+    List<MZDM> findMZDM();
 
-    public List<ZZMMDM> findZZMMDM();
+    List<ZZMMDM> findZZMMDM();
 
-    public List<BYXXDM> findBYXXDM();
+    List<BYXXDM> findBYXXDM();
 
     //    public void fileLoad(String fname);
-    public List<HJDM> findHJDM();
+    List<HJDM> findHJDM();
 
-    public List<HJDM> likeHJDM(String hjdmmc);
+    List<HJDM> likeHJDM(String hjdmmc);
 
-    public List<BKZY> findBKZY();
+    List<BKZY> findBKZY();
 }
