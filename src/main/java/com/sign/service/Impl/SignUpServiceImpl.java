@@ -1,24 +1,24 @@
 package com.sign.service.Impl;
 
 import com.sign.dao.SignUpDao;
-import com.sign.entity.Add;
 import com.sign.entity.RegistrationForm;
+import com.sign.entity.RegistrationFormAddition;
 import com.sign.function.FunctionApplication;
 import com.sign.service.ISignUpService;
 import com.sign.vo.RegistrationFormVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 
 public class SignUpServiceImpl implements ISignUpService {
-    @Resource
-    SignUpDao signUpDao;
+    @Autowired
+    private SignUpDao signUpDao;
 
-    @Resource
-    FunctionApplication functionApplication;
+    @Autowired
+    private FunctionApplication functionApplication;
 
 
     @Override
@@ -78,12 +78,12 @@ public class SignUpServiceImpl implements ISignUpService {
     }
 
     @Override
-    public List<Add> associationFind() {
+    public List<RegistrationFormAddition> associationFind() {
         return signUpDao.associationFind();
     }
 
     @Override
-    public Add associationSecFind(String did) {
+    public RegistrationFormAddition associationSecFind(String did) {
         return signUpDao.associationSecFind(did);
     }
 

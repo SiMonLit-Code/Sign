@@ -1,21 +1,21 @@
 package com.sign.service;
 
-import com.sign.entity.Add;
 import com.sign.entity.RegistrationForm;
+import com.sign.entity.RegistrationFormAddition;
 import com.sign.vo.RegistrationFormVo;
 
 import java.util.List;
 
 public interface ISignUpService {
-    public boolean insertStudent(RegistrationFormVo collect);
-    public boolean insertSecStudent(RegistrationFormVo collectVo);
+    boolean insertStudent(RegistrationFormVo collect);
+    boolean insertSecStudent(RegistrationFormVo collectVo);
 
-    public List<RegistrationForm> findStudent();
-    public RegistrationForm selectStudentById(String did);
-    public Integer updateStudent(RegistrationFormVo collect);
-    public Integer updateSecStudent(RegistrationFormVo collect);
-    public List<RegistrationForm> findStudentdId();
+    List<RegistrationForm> findStudent();
+    RegistrationForm selectStudentById(String did);
+    Integer updateStudent(RegistrationFormVo collect);
+    Integer updateSecStudent(RegistrationFormVo collect);
+    List<RegistrationForm> findStudentdId();
 
-    public List<Add> associationFind();
-    public Add associationSecFind(String did);
+    List<RegistrationFormAddition> associationFind();
+    RegistrationFormAddition associationSecFind(String did);
 }

@@ -9,7 +9,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Add {
+public class RegistrationFormAddition {
     private String did ;
     private String pay ;
     private String exam;

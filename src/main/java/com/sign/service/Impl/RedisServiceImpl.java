@@ -1,11 +1,9 @@
 package com.sign.service.Impl;
 
-import com.sign.entity.User;
 import com.sign.service.IRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -22,6 +20,8 @@ public class RedisServiceImpl implements IRedisService {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
+    @Value("${redis.tokenKeyPrefix}")
+    private String prefix;
 
     /**
      * 在redis保存token
@@ -31,7 +31,17 @@ public class RedisServiceImpl implements IRedisService {
      */
     @Override
     public void saveToken(String username, String token) {
-        redisTemplate.opsForValue().set(username,token,1800, TimeUnit.SECONDS);
+
+        redisTemplate.opsForValue().set(prefix+username,token,1800, TimeUnit.SECONDS);
+    }
+
+    /**
+     * 从Redis删除Token
+     * @param username
+     */
+    @Override
+    public void deleteToken(String username) {
+        redisTemplate.delete(prefix+username);
     }
 
     /**
@@ -42,8 +52,7 @@ public class RedisServiceImpl implements IRedisService {
      */
     @Override
     public boolean validateAccessToken(String username, String token) {
-        return Objects.equals(redisTemplate.opsForValue().get(username), token);
+        return Objects.equals(redisTemplate.opsForValue().get(prefix+username), token);
     }
-
 
 }

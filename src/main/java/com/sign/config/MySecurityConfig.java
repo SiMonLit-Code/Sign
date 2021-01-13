@@ -1,22 +1,20 @@
 package com.sign.config;
 
 import com.sign.component.JwtRequestFilter;
-import com.sign.exception.JwtAuthenticationPointException;
 import com.sign.handler.AuthFailureHandler;
+import com.sign.handler.AuthLogoutHandler;
 import com.sign.handler.AuthSuccessHandler;
 import com.sign.service.IRedisService;
 import com.sign.service.IRegisterService;
 import com.sign.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -41,6 +39,9 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthFailureHandler authFailureHandler;
 
     @Autowired
+    private AuthLogoutHandler authLogoutHandler;
+
+    @Autowired
     private IRedisService iRedisService;
 
     @Autowired
@@ -57,10 +58,16 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/loginStu")
                 .successHandler(authSuccessHandler)
                 .failureHandler(authFailureHandler)
+                .and()
+                .logout()
+                .logoutUrl("/exit")
+                .addLogoutHandler(authLogoutHandler)
                 .permitAll()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login","/index.html").permitAll()
+                //学生权限
+                .antMatchers("/registration/**").hasRole("USER")
+                .antMatchers("/login","/index.html","/exit","/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtRequestFilter(detailsService,iRedisService,iRegisterService), UsernamePasswordAuthenticationFilter.class);
@@ -70,7 +77,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         // 设置拦截忽略文件夹，可以对静态资源放行
         web.ignoring().antMatchers("/css/**", "/js/**","/asserts/**");
     }

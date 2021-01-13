@@ -33,7 +33,7 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = registerDao.registerFindById(username);
         if (null == user) {
-            return new org.springframework.security.core.userdetails.User(null,null,null);
+            return null;
         }
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.singletonList(authority));

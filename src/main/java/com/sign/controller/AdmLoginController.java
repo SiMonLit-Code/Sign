@@ -1,8 +1,18 @@
 package com.sign.controller;
 
 import com.alibaba.excel.EasyExcel;
-import com.sign.entity.*;
-import com.sign.service.*;
+import com.sign.entity.RegistrationFormAddition;
+import com.sign.entity.Admin;
+import com.sign.entity.CollectExcl;
+import com.sign.entity.MZDM;
+import com.sign.entity.RegistrationForm;
+import com.sign.entity.User;
+import com.sign.entity.ZZMMDM;
+import com.sign.service.IAdminService;
+import com.sign.service.IDMService;
+import com.sign.service.IRegisterService;
+import com.sign.service.ISignUpService;
+import com.sign.service.WxPayOrderService;
 import com.sign.utils.FilePathUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,28 +85,19 @@ public class AdmLoginController {
         return mv;
     }
 
-    //跳转修改页面
-    @GetMapping("/adminUpdatePage")
-    public String adminUpdatePage(){
-        return "admin/adminUpdate";
-    }
 
-    @GetMapping("/enter")
-    public String enterAdm() {
-        return "admin/adminlogin";
-    }
 
     //信息查询
     @GetMapping("/Adxinxi")
     public ModelAndView adXinxi() {
         ModelAndView mv = new ModelAndView();
 //        List<RegistrationForm> stus = iSignUpService.findStudent();
-        List<Add> addStus=iSignUpService.associationFind();
+        List<RegistrationFormAddition> registrationFormAdditionStuses =iSignUpService.associationFind();
         List<MZDM> mzdms = idmService.findMZDM();
         List<ZZMMDM> zzmmdms = idmService.findZZMMDM();
 
-        for (Add stu :
-                addStus) {
+        for (RegistrationFormAddition stu :
+                registrationFormAdditionStuses) {
             if(stu.getRegistrationForm()!=null){
                 for (MZDM mzdm :
                         mzdms) {
@@ -116,16 +117,13 @@ public class AdmLoginController {
             System.out.println(stu);
 
         }
-        mv.addObject("stus", addStus);
+        mv.addObject("stus", registrationFormAdditionStuses);
         mv.setViewName("emp/list");
         return mv;
     }
 
 
-    @GetMapping("/file")
-    public String adFile(HttpServletRequest request) {
-        return "emp/file";
-    }
+
 
     @GetMapping("/fileload")
     public String adFileLoad(HttpServletResponse response,Model model) {
@@ -133,7 +131,7 @@ public class AdmLoginController {
 //        System.out.println(fileName);
         String filepath="\\static\\files\\";
         List<RegistrationForm> registrationForms = iSignUpService.findStudent();
-        List<Add> addList=iSignUpService.associationFind();
+        List<RegistrationFormAddition> registrationFormAdditionList =iSignUpService.associationFind();
         Map<String,String> map = null ;
 
         for (RegistrationForm registrationForm :
@@ -145,14 +143,14 @@ public class AdmLoginController {
             }
             registrationForm.setPay(map.get("trade_state_desc"));
         }
-        for (Add add:
-             addList) {
+        for (RegistrationFormAddition registrationFormAddition :
+                registrationFormAdditionList) {
             for (RegistrationForm registrationForm :
                     registrationForms){
-                if (add.getDid().equals(registrationForm.getDid())){
-                    registrationForm.setCard(add.getCard());
-                    registrationForm.setExam(add.getExam());
-                    registrationForm.setSoldier(add.getSoldier());
+                if (registrationFormAddition.getDid().equals(registrationForm.getDid())){
+                    registrationForm.setCard(registrationFormAddition.getCard());
+                    registrationForm.setExam(registrationFormAddition.getExam());
+                    registrationForm.setSoldier(registrationFormAddition.getSoldier());
                 }
             }
         }
@@ -172,10 +170,7 @@ public class AdmLoginController {
         return "emp/file";
     }
 
-    @GetMapping("/cx")
-    public String xc() {
-        return "emp/listcx";
-    }
+
 
 //    @GetMapping("/zh")
 //    public String zh(){
@@ -186,9 +181,9 @@ public class AdmLoginController {
     public String xcId(Model model, HttpServletRequest request) {
         String id = request.getParameter("id");
 //        RegistrationForm stu = iSignUpService.selectStudentById(id);
-        Add stuAdd=iSignUpService.associationSecFind(id);
-        System.out.println(stuAdd.getRegistrationForm());
-        if(stuAdd==null){
+        RegistrationFormAddition stuRegistrationFormAddition =iSignUpService.associationSecFind(id);
+        System.out.println(stuRegistrationFormAddition.getRegistrationForm());
+        if(stuRegistrationFormAddition ==null){
             model.addAttribute("Msgnull", "查无此人");
             return "emp/listcx";
         }
@@ -198,19 +193,19 @@ public class AdmLoginController {
 
         for (MZDM mzdm :
                 mzdms) {
-            if (stuAdd.getRegistrationForm().getNation().toString().equals(mzdm.getMzdm())) {
-                stuAdd.getRegistrationForm().setNation(mzdm.getMzmc());
+            if (stuRegistrationFormAddition.getRegistrationForm().getNation().toString().equals(mzdm.getMzdm())) {
+                stuRegistrationFormAddition.getRegistrationForm().setNation(mzdm.getMzmc());
                 break;
             }
         }
         for (ZZMMDM zzmmdm :
                 zzmmdms) {
-            if (stuAdd.getRegistrationForm().getPc().toString().equals(zzmmdm.getZzmmdm())) {
-                stuAdd.getRegistrationForm().setPc(zzmmdm.getZzmmmc());
+            if (stuRegistrationFormAddition.getRegistrationForm().getPc().toString().equals(zzmmdm.getZzmmdm())) {
+                stuRegistrationFormAddition.getRegistrationForm().setPc(zzmmdm.getZzmmmc());
                 break;
             }
         }
-        model.addAttribute("stu", stuAdd);
+        model.addAttribute("stu", stuRegistrationFormAddition);
         model.addAttribute("zh", user);
         return "emp/listId";
     }
@@ -226,8 +221,5 @@ public class AdmLoginController {
         return "emp/listcx";
     }
 
-    @GetMapping("/returnAd")
-    public String returnAdmin(){
-        return "admin/adminlogin";
-    }
+
 }

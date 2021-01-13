@@ -10,5 +10,6 @@ import com.sign.entity.User;
  */
 public interface IRedisService {
     void saveToken(String username,String token);
+    void deleteToken(String username);
     boolean validateAccessToken(String username, String token);
 }

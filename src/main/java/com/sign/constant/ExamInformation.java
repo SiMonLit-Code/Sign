@@ -4,6 +4,8 @@ import com.sign.entity.*;
 import com.sign.service.IDMService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -31,7 +33,7 @@ public class ExamInformation {
     /** 户籍代码 */
     public static List<HJDM> censusRegister  = new ArrayList<>();
 
-
+    public static UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     @PostConstruct
     private void ExamInformationInit(){
         ExamInformation.nationCode = idmService.findMZDM();
@@ -40,4 +42,5 @@ public class ExamInformation {
         ExamInformation.enterMajor = idmService.findBKZY();
         ExamInformation.censusRegister  = idmService.findHJDM();
     }
+
 }

@@ -12,13 +12,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -46,6 +44,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest req,
                                     HttpServletResponse resp,
                                     FilterChain filterChain) throws ServletException, IOException {
+
         //从cookie中取出token
         String access_token = null;
         if (null != req.getCookies()) {
@@ -55,20 +54,21 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 }
             }
         }
-
-
+        //通过放行
         if (null != access_token) {
             String username = JwtTokenUtils.getNameFromToken(access_token);
             if (iRedisService.validateAccessToken(username, access_token)) {
                 filterChain.doFilter(req, resp);
+                return;
+            }else {
+                SecurityContextHolder.clearContext();
             }
         }
         String name = req.getParameter("username");
         //校验username
         if (null != name && SecurityContextHolder.getContext().getAuthentication() == null) {
-//            String username = JwtTokenUtils.getNameFromToken(access_token);
             UserDetails userDetails = detailsService.loadUserByUsername(name);
-            if (null != userDetails.getUsername()) {
+            if (null != userDetails) {
                 //检验密码
                 String password = req.getParameter("password");
                 if (iRegisterService.registerFind(new User(name, password))) {

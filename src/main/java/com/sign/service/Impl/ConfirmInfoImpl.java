@@ -2,7 +2,7 @@ package com.sign.service.Impl;
 
 import com.sign.dao.ConfirmDao;
 import com.sign.dao.SignUpDao;
-import com.sign.entity.Add;
+import com.sign.entity.RegistrationFormAddition;
 import com.sign.entity.ConfirmInfo;
 import com.sign.service.IConfirmInfoService;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class ConfirmInfoImpl implements IConfirmInfoService {
 
     @Override
     public void ConfirmInfoBe(ConfirmInfo confirmInfo) {
-        Add add=signUpDao.associationSecFind(confirmInfo.getSFZH());
+        RegistrationFormAddition registrationFormAddition =signUpDao.associationSecFind(confirmInfo.getSFZH());
 //        if (confirmInfo.getSFZH().equals(add.getDid() && confirmInfo)){
 //
 //        }

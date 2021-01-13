@@ -1,9 +1,9 @@
 package com.sign.service;
 
-import com.sign.entity.Add;
+import com.sign.entity.RegistrationFormAddition;
 
 import java.util.List;
 
 public interface IAssociationService {
-    public List<Add> associationFind();
+    public List<RegistrationFormAddition> associationFind();
 }

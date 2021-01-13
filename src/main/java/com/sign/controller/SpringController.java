@@ -1,10 +1,8 @@
 package com.sign.controller;
 
-import com.sign.entity.Add;
-import com.sign.entity.Spring;
+import com.sign.entity.RegistrationFormAddition;
 import com.sign.service.ISignUpService;
 import com.sign.service.SpringService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +38,7 @@ public class SpringController {
     public String selectOne(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         String did = (String) session.getAttribute("id");
-        Add addstudent = iSignUpService.associationSecFind((String) session.getAttribute("id"));
+        RegistrationFormAddition addstudent = iSignUpService.associationSecFind((String) session.getAttribute("id"));
         if (addstudent == null) {
             System.out.println("请先报名");
             return "emp/updatefalse";

@@ -1,14 +1,15 @@
 package com.sign.controller;
 
 import com.sign.constant.ExamInformation;
-import com.sign.entity.Add;
 import com.sign.entity.HJDM;
 import com.sign.entity.RegistrationForm;
+import com.sign.entity.RegistrationFormAddition;
 import com.sign.service.IDMService;
 import com.sign.service.ISignUpService;
 import com.sign.utils.FilePathUtils;
 import com.sign.utils.SignUpUtil;
 import com.sign.vo.RegistrationFormVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,7 @@ import java.util.List;
 @RequestMapping("/registration")
 public class SignUpController {
 
-    @Resource
+    @Autowired
     public ISignUpService iSignUpService;
 
     @Resource
@@ -38,137 +39,58 @@ public class SignUpController {
     /**
      * 报名页面(将民族代码，政治面貌代码，毕业学校代码返回到页面)
      *
-     * @param request
      * @return
      */
     @GetMapping("/ksbm")
-    public ModelAndView examRegistration(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        ModelAndView mv = new ModelAndView();
-        Add addstudent = iSignUpService.associationSecFind((String) session.getAttribute("id"));
-        if (addstudent != null) {
-            System.out.println("已报名");
-            mv.setViewName("emp/addfalse");
-        } else {
-            System.out.println("考生报名");
-            initInformation(mv);
-            String id = (String) session.getAttribute("id");
-            mv.addObject("id", id);
-            mv.setViewName("emp/add");
-        }
-        return mv;
-    }
-
-    private void initInformation(ModelAndView mv) {
-        mv.addObject("mzdm", ExamInformation.nationCode);
-        mv.addObject("zzmmdm", ExamInformation.politicsStatus);
-        mv.addObject("byxxdm", ExamInformation.graduation);
-        mv.addObject("bkzy", ExamInformation.enterMajor);
+    public ModelAndView examRegistration() {
+        RegistrationFormAddition formAddition = iSignUpService.associationSecFind(ExamInformation.userDetails.getUsername());
+        return SignUpUtil.examRegistrationDecorateMV(formAddition);
     }
 
     /**
      * 查询信息判断
      *
-     * @param request
-     * @param model
      * @return
      */
     @GetMapping("/xinxi")
-    public String findInformation(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        RegistrationForm student = iSignUpService.selectStudentById((String) session.getAttribute("id"));
-        Add addstudent = iSignUpService.associationSecFind((String) session.getAttribute("id"));
-        if (addstudent == null) {
-            System.out.println("请先报名");
-            return "emp/updatefalse";
-        } else {
-            String id = (String) session.getAttribute("id");
-            String pName = id + ".jpg";
-            //localhost:8080:/static/sfz/ URL+"/static/sfz/"
-
-            model.addAttribute("zp", "/imagesSFZ/" + pName);
-
-            String nationCode = SignUpUtil.findNationCode(student);
-            if (null != nationCode) {
-                model.addAttribute("mz", nationCode);
-            }
-            String politicsStatus = SignUpUtil.findPoliticsStatus(student);
-            if (null != politicsStatus) {
-                model.addAttribute("zz", politicsStatus);
-            }
-
-            model.addAttribute("collect", student);
-            return "table/complete";
-        }
+    public ModelAndView findInformation() {
+        String username = ExamInformation.userDetails.getUsername();
+        RegistrationForm student = iSignUpService.selectStudentById(username);
+        RegistrationFormAddition addstudent = iSignUpService.associationSecFind(username);
+        return SignUpUtil.findInformationDecorateMV(student, addstudent);
     }
 
     //修改前调用信息
     @GetMapping("/xg")
-    public ModelAndView updateBefore(HttpServletRequest request) {
+    public ModelAndView updateBefore() {
         ModelAndView mv = new ModelAndView();
-        HttpSession session = request.getSession();
-        Add addstudent = iSignUpService.associationSecFind((String) session.getAttribute("id"));
-        if (addstudent == null) {
-            System.out.println("请先报名");
-            mv.setViewName("emp/updatefalse");
-        } else {
-            mv.addObject("student", addstudent.getRegistrationForm());
-            mv.addObject("addstudent", addstudent);
-            initInformation(mv);
-            mv.setViewName("emp/update");
-        }
-        return mv;
+        RegistrationFormAddition addstudent = iSignUpService.associationSecFind(ExamInformation.userDetails.getUsername());
+        return SignUpUtil.updateBeforeDecorateMV(addstudent);
     }
 
     //修改
     @PostMapping("/update")
-    public String updateAfter(RegistrationFormVo collect, HttpServletRequest request, Model model) {
-        String[] str = request.getParameter("cidname").split(" ");
+    public ModelAndView updateAfter(RegistrationFormVo collect, @RequestParam("cidname") String cidName) {
+        String[] str = cidName.split(" ");
         collect.setCid(Integer.parseInt(str[0]));
         collect.setCname(str[1]);
-        System.out.println("------修改2-----" + collect);
-        if (iSignUpService.updateStudent(collect) == 1) {
-            if (iSignUpService.updateSecStudent(collect) == 1) {
-                System.out.println("修改成功");
-                model.addAttribute("suc", "修改成功");
-            } else {
-                System.out.println("修改失败");
-                model.addAttribute("suc", "修改失败，检查信息");
-            }
-        } else {
-            System.out.println("修改失败");
-            model.addAttribute("suc", "修改失败，检查信息");
-        }
-        return "dashboard";
+        Integer updateStatus = iSignUpService.updateStudent(collect);
+        Integer updateAddStatus = iSignUpService.updateSecStudent(collect);
+        return SignUpUtil.updateAfterDecorateMV(updateStatus, updateAddStatus);
     }
 
     //报名
     @PostMapping("/insert")
-    public ModelAndView insertStudent(RegistrationFormVo collect, HttpServletRequest request) {
-        String[] str = request.getParameter("cidname").split(" ");
+    public ModelAndView insertStudent(RegistrationFormVo collect, @RequestParam("cidname") String cidName) {
+        String[] str = cidName.split(" ");
         collect.setCid(Integer.parseInt(str[0]));
         collect.setCname(str[1]);
-        ModelAndView mv = new ModelAndView();
-        HttpSession session = request.getSession();
-        session.setAttribute("collect", collect);
-        System.out.println(collect);
-        boolean flag = iSignUpService.insertStudent(collect);
-        if (flag) {
-            if (iSignUpService.insertSecStudent(collect)) {
-                mv.addObject("collect", collect);
-                System.out.println("报名成功");
-                mv.setViewName("emp/addsuc");
-            } else {
-                System.out.println("报名失败");
-                mv.addObject("errorMsg", "报名失败，请检查填写信息");
-                mv.setViewName("dashboard");
-            }
-        } else {
-            System.out.println("报名失败");
-            mv.addObject("errorMsg", "报名失败，请检查填写信息");
-            mv.setViewName("dashboard");
-        }
-        return mv;
+//        HttpSession session = request.getSession();
+//        session.setAttribute("collect", collect);
+//        System.out.println(collect);
+        boolean var1 = iSignUpService.insertStudent(collect);
+        boolean var2 = iSignUpService.insertSecStudent(collect);
+        return SignUpUtil.insertStudentDecorateMV(var1, var2, collect);
     }
 
     /**
@@ -176,7 +98,8 @@ public class SignUpController {
      */
     // 执行上传
     @RequestMapping("/upload")
-    public String upload(@RequestParam("file") MultipartFile file, Model model, HttpServletRequest request) {
+    public String picUpload(@RequestParam("file") MultipartFile file, Model model, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView();
         if (file.getSize() > 204800 || 6144 > file.getSize()) {
             model.addAttribute("zpMsg", "照片大小有误");
             System.out.println(file.getSize());
@@ -225,7 +148,7 @@ public class SignUpController {
     public String zp(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         System.out.println(session.getAttribute("id"));
-        Add addstudent = iSignUpService.associationSecFind((String) session.getAttribute("id"));
+        RegistrationFormAddition addstudent = iSignUpService.associationSecFind((String) session.getAttribute("id"));
         if (addstudent == null) {
             System.out.println("请先报名");
             return "emp/updatefalse";

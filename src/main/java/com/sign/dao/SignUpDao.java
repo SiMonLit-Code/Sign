@@ -1,6 +1,6 @@
 package com.sign.dao;
 
-import com.sign.entity.Add;
+import com.sign.entity.RegistrationFormAddition;
 import com.sign.entity.RegistrationForm;
 import com.sign.vo.RegistrationFormVo;
 import org.apache.ibatis.annotations.*;
@@ -12,30 +12,30 @@ import java.util.List;
 public interface SignUpDao {
     //报名
     @Insert("insert into registrationForm(sid,sname,gender,nation,birth,pc,cmajor,gmajor,gid,did,addr,pos,person,parent,kid,cid,cname,nid,tname,tel) value(#{sid},#{sname},#{gender},#{nation},#{birth},#{pc},#{cmajor},#{gmajor},#{gid},#{did},#{addr},#{pos},#{person},#{parent},#{kid},#{cid},#{cname},#{nid},#{tname},#{tel})")
-    public boolean insertStudent(RegistrationFormVo collect);
+     boolean insertStudent(RegistrationFormVo collect);
     //报名附表
     @Insert("insert into addcollect(did,exam,card,soldier) value(#{did},#{exam},#{card},#{soldier})")
-    public boolean insertSecStudent(RegistrationFormVo collectVo);
+     boolean insertSecStudent(RegistrationFormVo collectVo);
 
 
 
     //查询所有
     @Select("select * from registrationForm")
-    public List<RegistrationForm> findStudent();
+     List<RegistrationForm> findStudent();
 
     @Select("select sid,did from registrationForm")
-    public List<RegistrationForm> findStudentdId();
+     List<RegistrationForm> findStudentdId();
 
     //查询单个
     @Select("select * from registrationForm where did=#{did}")
-    public RegistrationForm selectStudentById(String dId);
+     RegistrationForm selectStudentById(String dId);
 
     //修改
     @Update("update registrationForm set sid=#{sid},sname=#{sname},gender=#{gender},nation=#{nation},birth=#{birth},pc=#{pc},cmajor=#{cmajor},gmajor=#{gmajor},gid=#{gid},addr=#{addr},pos=#{pos},person=#{person},parent=#{parent},kid=#{kid},cid=#{cid},cname=#{cname},nid=#{nid},tname=#{tname},tel=#{tel} where did=#{did} ")
-    public Integer updateStudent(RegistrationFormVo collect);
+     Integer updateStudent(RegistrationFormVo collect);
     //修改附表
     @Update("update addcollect set exam=#{exam},card=#{card},soldier=#{soldier} where did=#{did}")
-    public Integer updateSecStudent(RegistrationFormVo collect);
+     Integer updateSecStudent(RegistrationFormVo collect);
 
     //连表查询
     @Select("select * from addcollect")
@@ -47,7 +47,7 @@ public interface SignUpDao {
             @Result(column = "soldier",property = "soldier"),
             @Result(property = "registrationForm",column = "did",one = @One(select = "com.sign.dao.SignUpDao.selectStudentById",fetchType = FetchType.EAGER))
     })
-    public List<Add> associationFind();
+     List<RegistrationFormAddition> associationFind();
 
     //连表单个查询
     @Select("select * from addcollect where addcollect.did=#{did}")
@@ -59,5 +59,5 @@ public interface SignUpDao {
             @Result(column = "soldier",property = "soldier"),
             @Result(property = "registrationForm",column = "did",one = @One(select = "com.sign.dao.SignUpDao.selectStudentById",fetchType = FetchType.EAGER))
     })
-    public Add associationSecFind(String did);
+     RegistrationFormAddition associationSecFind(String did);
 }

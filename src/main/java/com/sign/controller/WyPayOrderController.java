@@ -203,10 +203,10 @@ public class WyPayOrderController {
 //        model.addAttribute("out_trade_no",map.get("out_trade_no")) ;    //订单号
 //        model.addAttribute("trade_state_desc",map.get("trade_state_desc")) ;    //订单状态信息
         model.addAttribute("products",products) ;*/
-        List<Add> adds = signUpDao.associationFind();
+        List<RegistrationFormAddition> registrationFormAdditions = signUpDao.associationFind();
         List<Product> products=new ArrayList<>();
-        for (Add add : adds){
-            products.add(new Product(add.getDid() , ""+add.getRegistrationForm().getSid() ,add.getPay())) ;
+        for (RegistrationFormAddition registrationFormAddition : registrationFormAdditions){
+            products.add(new Product(registrationFormAddition.getDid() , ""+ registrationFormAddition.getRegistrationForm().getSid() , registrationFormAddition.getPay())) ;
         }
         model.addAttribute("products" ,products) ;
         return "emp/zfAd" ;
