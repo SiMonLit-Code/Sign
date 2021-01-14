@@ -6,6 +6,7 @@ import com.sign.entity.RegistrationForm;
 import com.sign.entity.RegistrationFormAddition;
 import com.sign.entity.ZZMMDM;
 import com.sign.vo.RegistrationFormVo;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -22,14 +23,34 @@ import java.util.function.Consumer;
  */
 public class SignUpUtil {
 
-    public static void picUploadDecorateMV(Integer picSize, ModelAndView mv){
+
+    public static File picPathFile(String ext) {
+        String path = FilePathUtils.getFileName("//imagesSFZ//");
+//            String path = filePath + "rotPhoto/";
+        // 新建文件
+        String id = ExamInformation.userDetails.getUsername();
+        String pName = id + "." + ext;
+        File filepath = new File(path, pName);
+        // 判断路径是否存在，如果不存在就创建一个
+        if (!filepath.getParentFile().exists()) {
+            filepath.getParentFile().mkdirs();
+        }
+        return new File(path + File.separator + pName);
+    }
+
+    public static boolean picJudgeSizeAndName(String picName, Long picSize, ModelAndView mv) {
         if (picSize > 204800 || 6144 > picSize) {
             mv.addObject("zpMsg", "照片大小有误");
             mv.setViewName("emp/zp");
+            return false;
+        }else if (null == picName){
+            mv.addObject("zpMsg", "照片名称有误");
+            mv.setViewName("emp/zp");
         }
+        return true;
     }
 
-    public static ModelAndView insertStudentDecorateMV(boolean var1, boolean var2, RegistrationFormVo collect){
+    public static ModelAndView insertStudentDecorateMV(boolean var1, boolean var2, RegistrationFormVo collect) {
         ModelAndView mv = new ModelAndView();
         if (var1) {
             if (var2) {
@@ -49,7 +70,7 @@ public class SignUpUtil {
         return mv;
     }
 
-    public static ModelAndView updateAfterDecorateMV(Integer updateStatus, Integer updateAddStatus){
+    public static ModelAndView updateAfterDecorateMV(Integer updateStatus, Integer updateAddStatus) {
         ModelAndView mv = new ModelAndView();
 //        System.out.println("------修改2-----" + collect);
         if (updateStatus == 1) {
@@ -69,7 +90,7 @@ public class SignUpUtil {
     }
 
 
-    public static ModelAndView updateBeforeDecorateMV(RegistrationFormAddition addstudent){
+    public static ModelAndView updateBeforeDecorateMV(RegistrationFormAddition addstudent) {
         ModelAndView mv = new ModelAndView();
         if (addstudent == null) {
             System.out.println("请先报名");
@@ -85,11 +106,12 @@ public class SignUpUtil {
 
     /**
      * 信息判断
+     *
      * @param student
      * @param addstudent
      * @return
      */
-    public static ModelAndView findInformationDecorateMV(RegistrationForm student, RegistrationFormAddition addstudent){
+    public static ModelAndView findInformationDecorateMV(RegistrationForm student, RegistrationFormAddition addstudent, String picUrl) {
         ModelAndView mv = new ModelAndView();
         if (addstudent == null) {
             System.out.println("请先报名");
@@ -98,7 +120,7 @@ public class SignUpUtil {
             String pName = ExamInformation.userDetails.getUsername() + ".jpg";
             //localhost:8080:/static/sfz/ URL+"/static/sfz/"
 
-            mv.addObject("zp", "/imagesSFZ/" + pName);
+            mv.addObject("zp", picUrl + "/imagesSFZ/" + pName);
 
             String nationCode = SignUpUtil.findNationCode(student);
             if (null != nationCode) {
@@ -116,9 +138,10 @@ public class SignUpUtil {
 
     /**
      * 注册报名页面预处理
+     *
      * @return
      */
-    public static ModelAndView examRegistrationDecorateMV(RegistrationFormAddition formAddition){
+    public static ModelAndView examRegistrationDecorateMV(RegistrationFormAddition formAddition) {
         ModelAndView mv = new ModelAndView();
         if (formAddition != null) {
             System.out.println("已报名");
@@ -140,18 +163,18 @@ public class SignUpUtil {
         mv.addObject("bkzy", ExamInformation.enterMajor);
     }
 
-    public static String findNationCode(RegistrationForm student){
-        for (MZDM mzdm: ExamInformation.nationCode) {
-            if (student.getNation().equals(mzdm.getMzdm())){
+    public static String findNationCode(RegistrationForm student) {
+        for (MZDM mzdm : ExamInformation.nationCode) {
+            if (student.getNation().equals(mzdm.getMzdm())) {
                 return mzdm.getMzmc();
             }
         }
         return null;
     }
 
-    public static String findPoliticsStatus(RegistrationForm student){
-        for (ZZMMDM zzmmdm: ExamInformation.politicsStatus) {
-            if (student.getPc().equals(zzmmdm.getZzmmdm())){
+    public static String findPoliticsStatus(RegistrationForm student) {
+        for (ZZMMDM zzmmdm : ExamInformation.politicsStatus) {
+            if (student.getPc().equals(zzmmdm.getZzmmdm())) {
                 return zzmmdm.getZzmmmc();
             }
         }
@@ -159,17 +182,21 @@ public class SignUpUtil {
     }
 
 
-    private static List<?> switchClass(Class<?> clazz){
-        switch (clazz.getSimpleName()){
-            case "BKZY" : return ExamInformation.enterMajor;
-            case "BYXXDM" : return ExamInformation.graduation;
-            case "ZZMMDM" : return ExamInformation.politicsStatus;
-            case "MZDM" : return ExamInformation.nationCode;
+    private static List<?> switchClass(Class<?> clazz) {
+        switch (clazz.getSimpleName()) {
+            case "BKZY":
+                return ExamInformation.enterMajor;
+            case "BYXXDM":
+                return ExamInformation.graduation;
+            case "ZZMMDM":
+                return ExamInformation.politicsStatus;
+            case "MZDM":
+                return ExamInformation.nationCode;
         }
         return Collections.EMPTY_LIST;
     }
 
-    public static void ifNotConsumer(Consumer consumer,Object o){
+    public static void ifNotConsumer(Consumer consumer, Object o) {
         consumer.accept(o);
     }
 }

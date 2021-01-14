@@ -3,6 +3,7 @@ package com.sign.handler;
 import com.sign.jwt.JwtTokenUtils;
 import com.sign.service.IRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,9 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
     @Autowired
     IRedisService iRedisService;
 
+    @Value("${admin.username}")
+    String[] adminUsername;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
@@ -36,7 +40,13 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
         response.addCookie(cookie);
         //存入redis
         iRedisService.saveToken(username,token);
-        request.setAttribute("flag","true");
+
+        //判断角色
+        if (adminUsername.equals(username)){
+            request.setAttribute("flag","admin");
+        }else {
+            request.setAttribute("flag","user");
+        }
         request.getRequestDispatcher(request.getRequestURI()).forward(request, response);
     }
 }

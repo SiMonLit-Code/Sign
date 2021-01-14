@@ -6,10 +6,10 @@ import com.sign.entity.RegistrationForm;
 import com.sign.entity.RegistrationFormAddition;
 import com.sign.service.IDMService;
 import com.sign.service.ISignUpService;
-import com.sign.utils.FilePathUtils;
 import com.sign.utils.SignUpUtil;
 import com.sign.vo.RegistrationFormVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +36,8 @@ public class SignUpController {
     @Resource
     IDMService idmService;
 
+    @Value("${pic.url}")
+    private String picUrl;
     /**
      * 报名页面(将民族代码，政治面貌代码，毕业学校代码返回到页面)
      *
@@ -57,10 +59,13 @@ public class SignUpController {
         String username = ExamInformation.userDetails.getUsername();
         RegistrationForm student = iSignUpService.selectStudentById(username);
         RegistrationFormAddition addstudent = iSignUpService.associationSecFind(username);
-        return SignUpUtil.findInformationDecorateMV(student, addstudent);
+        return SignUpUtil.findInformationDecorateMV(student, addstudent,picUrl);
     }
 
-    //修改前调用信息
+    /**
+     * 修改前调用信息
+     * @return
+     */
     @GetMapping("/xg")
     public ModelAndView updateBefore() {
         ModelAndView mv = new ModelAndView();
@@ -68,7 +73,13 @@ public class SignUpController {
         return SignUpUtil.updateBeforeDecorateMV(addstudent);
     }
 
-    //修改
+
+    /**
+     * 修改
+     * @param collect
+     * @param cidName
+     * @return
+     */
     @PostMapping("/update")
     public ModelAndView updateAfter(RegistrationFormVo collect, @RequestParam("cidname") String cidName) {
         String[] str = cidName.split(" ");
@@ -79,7 +90,13 @@ public class SignUpController {
         return SignUpUtil.updateAfterDecorateMV(updateStatus, updateAddStatus);
     }
 
-    //报名
+
+    /**
+     * 报名
+     * @param collect
+     * @param cidName
+     * @return
+     */
     @PostMapping("/insert")
     public ModelAndView insertStudent(RegistrationFormVo collect, @RequestParam("cidname") String cidName) {
         String[] str = cidName.split(" ");
@@ -95,53 +112,38 @@ public class SignUpController {
 
     /**
      * 上传地址
+     *
+     * 执行上传
      */
-    // 执行上传
     @RequestMapping("/upload")
-    public String picUpload(@RequestParam("file") MultipartFile file, Model model, HttpServletRequest request) {
+    public ModelAndView picUpload(@RequestParam("file") MultipartFile file) {
         ModelAndView mv = new ModelAndView();
-        if (file.getSize() > 204800 || 6144 > file.getSize()) {
-            model.addAttribute("zpMsg", "照片大小有误");
-            System.out.println(file.getSize());
-            return "emp/zp";
-        }
-
-        HttpSession session = request.getSession();
-        // 获取上传文件名
         String filename = file.getOriginalFilename();
+        if (!SignUpUtil.picJudgeSizeAndName(filename, file.getSize(), mv)) {
+            return mv;
+        }
+        // 获取上传文件名
+
         String ext = filename.substring(filename.indexOf(".") + 1);
         if ("jpg".equals(ext) || "JPG".equals(ext)) {
-            // 定义上传文件保存路径//static//sfz//
-            String path = FilePathUtils.getFileName("//imagesSFZ//");
-//            String path = filePath + "rotPhoto/";
-            // 新建文件
-            String id = (String) session.getAttribute("id");
-            String pName = id + "." + ext;
-            File filepath = new File(path, pName);
-            // 判断路径是否存在，如果不存在就创建一个
-            if (!filepath.getParentFile().exists()) {
-                filepath.getParentFile().mkdirs();
-            }
+            File picFile = SignUpUtil.picPathFile(ext);
             try {
                 // 写入文件
 //                Thumbnails.of((File) file).size(480,640).toFile((File) file);
-                file.transferTo(new File(path + File.separator + pName));
-
+                file.transferTo(picFile);
             } catch (IOException e) {
-
                 e.printStackTrace();
-
             }
             // 将src路径发送至html页面
 //            model.addAttribute("filename", "/store/rotPhoto/" + pName);
-            session.setAttribute("zp", path + File.separator + pName);
-            model.addAttribute("collect", session.getAttribute("collect"));
-            model.addAttribute("zpMsg", "照片上传成功");
-            return "emp/zp";
+//            session.setAttribute("zp", picFile.getAbsolutePath());
+//            model.addAttribute("collect", session.getAttribute("collect"));
+            mv.addObject("zpMsg", "照片上传成功");
         } else {
-            model.addAttribute("zpMsg", "照片格式错误");
-            return "emp/zp";
+            mv.addObject("zpMsg", "照片格式错误");
         }
+        mv.setViewName("emp/zp");
+        return mv;
     }
 
     @GetMapping("/zp")
@@ -149,7 +151,7 @@ public class SignUpController {
         HttpSession session = request.getSession();
         RegistrationFormAddition addstudent = iSignUpService.associationSecFind(ExamInformation.userDetails.getUsername());
         if (addstudent == null) {
-            System.out.println("请先报名");
+//            System.out.println("请先报名");
             return "emp/updatefalse";
         }
         String zp = (String) session.getAttribute("zp");

@@ -1,5 +1,6 @@
 package com.sign.handler;
 
+import com.sign.constant.ExamInformation;
 import com.sign.service.IRedisService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class AuthLogoutHandler implements LogoutHandler {
         UserDetails user = (UserDetails) authentication.getPrincipal();
         //删除redis中缓存
         iRedisService.deleteToken(user.getUsername());
+        ExamInformation.userDetails = null;
         SecurityContextHolder.clearContext();
 
         response.setHeader("Content-Type", "application/json;charset=utf-8");

@@ -23,6 +23,7 @@ public class RegisterServiceImpl implements IRegisterService {
 
     @Override
     public boolean registerInsert(User user) {
+        user.setRole("ROLE_USER");
         return registerDao.registerInsert(user);
     }
 

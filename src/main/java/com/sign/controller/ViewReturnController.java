@@ -46,22 +46,22 @@ public class ViewReturnController {
         return "admin/adminUpdate";
     }
 
-    @GetMapping("/enter")
+    @GetMapping("/admin/enter")
     public String enterAdm() {
         return "admin/adminlogin";
     }
 
-    @GetMapping("/file")
+    @GetMapping("/admin/file")
     public String adFile() {
         return "emp/file";
     }
 
-    @GetMapping("/cx")
+    @GetMapping("/admin/query")
     public String xc() {
         return "emp/listcx";
     }
 
-    @GetMapping("/returnAd")
+    @GetMapping("/admin/returnAd")
     public String returnAdmin(){
         return "admin/adminlogin";
     }

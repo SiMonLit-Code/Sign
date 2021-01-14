@@ -42,17 +42,19 @@ public class LoginAndRegisterUtil {
     }
 
     /**
-     * 学生登陆
+     * 登陆
      * @param status
      * @return
      */
     public static ModelAndView loginStatusInf(String status){
         ModelAndView mv = new ModelAndView();
-
-        if ("true".equals(status)) {
+        if ("user".equals(status)) {
             //正确登录
             mv.setViewName("redirect:/main");
-        } else {
+        }if ("admin".equals(status)){
+            //管理员登录
+            mv.setViewName("admin/adminlogin");
+        }else{
             //密码错误返回登录页面
             mv.addObject("msg","身份证或密码错误");
             mv.setViewName("index");

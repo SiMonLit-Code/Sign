@@ -13,7 +13,7 @@
 </head>
 
 <body class="text-center">
-<form class="form-signin" action="/user" th:action="@{/user}" th:method="post">
+<form class="form-signin"  th:action="@{/register}" th:method="post">
     <img class="mb-4" th:src="@{/asserts/img/nclg.jpg}" alt="" width="250" height="60">
     <!--			<img class="mb-4" src="asserts/img/bootstrap-solid.svg" alt="" width="72" height="72">-->
     <h1 style="font-family: 'Arial Black';margin-bottom: 35px">考生信息注册</h1>
@@ -28,7 +28,7 @@
     <input id="password" type="password" th:maxlength="18" class="form-control" name="password" th:placeholder="密码" required="" style="margin-bottom: 20px">
     <input id="repetitionPsw" type="password" th:maxlength="18" class="form-control" name="repetitionPsw" th:placeholder="再次输入密码" required="" style="margin-bottom: 20px">
     <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-bottom: 20px" >注册</button>
-    <a href="index.html">返回主页</a>
+    <a th:href="@{/login}">返回主页</a>
     <p class="mt-5 mb-3 text-muted">© 2020-2021</p>
 </form>
 

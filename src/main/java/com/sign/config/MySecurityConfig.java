@@ -9,6 +9,7 @@ import com.sign.service.IRegisterService;
 import com.sign.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -67,6 +68,8 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //学生权限
                 .antMatchers("/registration/**").hasRole("USER")
+                //管理员权限
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/login","/index.html","/exit","/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -80,6 +83,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         // 设置拦截忽略文件夹，可以对静态资源放行
         web.ignoring().antMatchers("/css/**", "/js/**","/asserts/**");
+//        web.ignoring().antMatchers(HttpMethod.GET,"/register");
     }
 
     @Override

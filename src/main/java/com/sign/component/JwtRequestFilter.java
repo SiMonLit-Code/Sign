@@ -1,5 +1,6 @@
 package com.sign.component;
 
+import com.sign.constant.ExamInformation;
 import com.sign.entity.User;
 import com.sign.jwt.JwtTokenUtils;
 import com.sign.service.IRedisService;
@@ -54,17 +55,25 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 }
             }
         }
+        String name = req.getParameter("username");
         //通过放行
         if (null != access_token) {
-            String username = JwtTokenUtils.getNameFromToken(access_token);
-            if (iRedisService.validateAccessToken(username, access_token)) {
-                filterChain.doFilter(req, resp);
-                return;
-            }else {
-                SecurityContextHolder.clearContext();
+
+            if (null != ExamInformation.userDetails) {
+                String username = ExamInformation.userDetails.getUsername();
+                if (name != null && !name.equals(username)) {
+                    //前账户没退出，登录另一个账户
+                    SecurityContextHolder.clearContext();
+                } else if (iRedisService.validateAccessToken(username, access_token)) {
+                    //token有效且账户正确
+                    filterChain.doFilter(req, resp);
+                    return;
+                } else {
+                    SecurityContextHolder.clearContext();
+                }
             }
         }
-        String name = req.getParameter("username");
+
         //校验username
         if (null != name && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = detailsService.loadUserByUsername(name);

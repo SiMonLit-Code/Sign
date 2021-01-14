@@ -23,7 +23,7 @@ spring:
 #  mapper-locations: classpath:mybatis/mapper/*.xml
 #  config-location: classpath:mybatis/mybatisconfig.xml
 server:
-  port: 9091
+  port: 9090
   tomcat:
     max-swallow-size: 100MB
 
