@@ -131,7 +131,7 @@ public class AdministratorController {
 //        return "emp/listcx";
 //    }
 
-    @PostMapping("/cxId")
+    @PostMapping("/query")
     public ModelAndView findStuInformationById(@RequestParam("id") String id) {
 //        RegistrationForm stu = iSignUpService.selectStudentById(id);
         RegistrationFormAddition stuRegistrationFormAddition = iSignUpService.associationSecFind(id);

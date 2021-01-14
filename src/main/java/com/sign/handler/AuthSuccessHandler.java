@@ -13,6 +13,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * @author : czz
@@ -26,7 +27,7 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
     @Autowired
     IRedisService iRedisService;
 
-    @Value("${admin.username}")
+    @Value("${admin.usernames}")
     String[] adminUsername;
 
     @Override
@@ -42,7 +43,7 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
         iRedisService.saveToken(username,token);
 
         //判断角色
-        if (adminUsername.equals(username)){
+        if (Arrays.asList(adminUsername).contains(username)){
             request.setAttribute("flag","admin");
         }else {
             request.setAttribute("flag","user");

@@ -36,7 +36,7 @@ public interface SignUpDao {
      Integer updateSecStudent(RegistrationFormVo collect);
 
     //连表查询
-    @Select("select * from addcollect")
+    @Select("select * from stu_info_add")
     @Results(id = "collectMap",value = {
             @Result(id = true,column = "did",property = "did"),
             @Result(column = "pay",property = "pay"),

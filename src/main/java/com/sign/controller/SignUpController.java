@@ -38,6 +38,7 @@ public class SignUpController {
 
     @Value("${pic.url}")
     private String picUrl;
+
     /**
      * 报名页面(将民族代码，政治面貌代码，毕业学校代码返回到页面)
      *
@@ -59,16 +60,16 @@ public class SignUpController {
         String username = ExamInformation.userDetails.getUsername();
         RegistrationForm student = iSignUpService.selectStudentById(username);
         RegistrationFormAddition addstudent = iSignUpService.associationSecFind(username);
-        return SignUpUtil.findInformationDecorateMV(student, addstudent,picUrl);
+        return SignUpUtil.findInformationDecorateMV(student, addstudent, picUrl);
     }
 
     /**
      * 修改前调用信息
+     *
      * @return
      */
     @GetMapping("/xg")
     public ModelAndView updateBefore() {
-        ModelAndView mv = new ModelAndView();
         RegistrationFormAddition addstudent = iSignUpService.associationSecFind(ExamInformation.userDetails.getUsername());
         return SignUpUtil.updateBeforeDecorateMV(addstudent);
     }
@@ -76,6 +77,7 @@ public class SignUpController {
 
     /**
      * 修改
+     *
      * @param collect
      * @param cidName
      * @return
@@ -93,6 +95,7 @@ public class SignUpController {
 
     /**
      * 报名
+     *
      * @param collect
      * @param cidName
      * @return
@@ -112,7 +115,7 @@ public class SignUpController {
 
     /**
      * 上传地址
-     *
+     * <p>
      * 执行上传
      */
     @RequestMapping("/upload")

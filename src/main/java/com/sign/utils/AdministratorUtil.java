@@ -16,9 +16,9 @@ import java.util.List;
  * @description :
  */
 public class AdministratorUtil {
-    public static ModelAndView findStuInformationById(RegistrationFormAddition stuAdd, User user){
+    public static ModelAndView findStuInformationById(RegistrationFormAddition stuAdd, User user) {
         ModelAndView mv = new ModelAndView();
-        if (stuAdd == null) {
+        if (!(null == user || !"USER".equals(user.getRole())) && stuAdd == null) {
             mv.addObject("Msgnull", "查无此人");
             mv.setViewName("emp/listcx");
         }
@@ -45,7 +45,7 @@ public class AdministratorUtil {
     }
 
 
-    public static ModelAndView findStuInformation(List<RegistrationFormAddition> stuAdds){
+    public static ModelAndView findStuInformation(List<RegistrationFormAddition> stuAdds) {
         ModelAndView mv = new ModelAndView();
         List<MZDM> nationCode = ExamInformation.nationCode;
         List<ZZMMDM> politicsStatus = ExamInformation.politicsStatus;

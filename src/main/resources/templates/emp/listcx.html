@@ -22,7 +22,7 @@
 		<link th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
 		<style type="text/css">
 			/* Chart.js */
-			
+
 			@-webkit-keyframes chartjs-render-animation {
 				from {
 					opacity: 0.99
@@ -31,7 +31,7 @@
 					opacity: 1
 				}
 			}
-			
+
 			@keyframes chartjs-render-animation {
 				from {
 					opacity: 0.99
@@ -40,7 +40,7 @@
 					opacity: 1
 				}
 			}
-			
+
 			.chartjs-render-monitor {
 				-webkit-animation: chartjs-render-animation 0.001s;
 				animation: chartjs-render-animation 0.001s;
@@ -60,7 +60,7 @@
 					<p style="color: red" th:if="${not #strings.isEmpty(Msgnull)}" th:text="${Msgnull}"></p>
 
 					<!--					<div><h2><button class="btn-light" onclick="save()">添加员工</button></h2><input style="align-content: center" ></div>-->
-					<form th:action="@{/cxId}" method="post">
+					<form th:action="@{/admin/query}" method="post">
 						<label>请输入查询考生的身份证</label>
 						<input name="id" type="text" class="form-control"  required="">
 						<input type="submit" value="查询">
