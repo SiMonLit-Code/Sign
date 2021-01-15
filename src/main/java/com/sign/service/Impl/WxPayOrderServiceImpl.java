@@ -106,7 +106,6 @@ public class WxPayOrderServiceImpl implements WxPayOrderService {
     public void queryAllOrder(List<RegistrationForm> registrationForms) {
 
         Map<String,String> map = null ;
-        List<AddVo> addVos = new ArrayList<>() ;
         for (RegistrationForm registrationForm : registrationForms) {
             try {
                 map = payOrderService.orderQuery(registrationForm.getDid()) ;

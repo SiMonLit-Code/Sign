@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface AddVoDao {
 
-    @Update("update addcollect set pay = #{pay} , paydate=#{paydate} where did = #{did} ")
+    @Update("update stu_info_add set pay = #{pay} , paydate=#{paydate} where did = #{did} ")
     int insert(AddVo addVo) ;
 
 }

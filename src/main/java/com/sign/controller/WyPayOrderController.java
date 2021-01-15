@@ -2,8 +2,9 @@ package com.sign.controller;
 
 import com.sign.constant.ExamInformation;
 import com.sign.dao.SignUpDao;
-import com.sign.entity.*;
-import com.sign.service.IRegisterService;
+import com.sign.entity.Product;
+import com.sign.entity.RegistrationForm;
+import com.sign.entity.RegistrationFormAddition;
 import com.sign.service.ISignUpService;
 import com.sign.service.WxPayOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,13 +65,12 @@ public class WyPayOrderController {
     }
 
 
-
-    //    @GetMapping({"/","/index"})
-//    public String index() {
-//        return "index" ;
-//    }
-    //下订单
+    /**
+     * 下订单
+     * @return
+     */
     @GetMapping("/order")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public String order() {
         RegistrationForm student = iSignUpService.selectStudentById(ExamInformation.userDetails.getUsername());
         if (student == null) {
@@ -80,14 +80,18 @@ public class WyPayOrderController {
         return "emp/payment";
     }
 
-    //管理订单
-//    @GetMapping("/orderAd")
-//    public String orderAd(){
-//        return "emp/zfAd" ;
-//    }
 
-    //支付订单
+
+    /**
+     * 支付订单
+     * @param product
+     * @param request
+     * @param response
+     * @param model
+     * @return
+     */
     @PostMapping("/orderSubmit")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public String order(Product product, HttpServletRequest request, HttpServletResponse response, Model model) {
         product.setOrderNo(ExamInformation.userDetails.getUsername());
         System.out.println(product);
@@ -150,11 +154,14 @@ public class WyPayOrderController {
     @Resource
     private SignUpDao signUpDao;
 
-    //管理员订单查询
+    /**
+     * 管理员订单查询
+     * @param model
+     * @return
+     */
     @RequestMapping("/orderQueryAd")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String orderQueryAd(Model model) {
-//        List<Register> accounts=iRegisterService.registerFindAll();
       /*  List<Product> products=new ArrayList<>();
         List<RegistrationForm> collects=iSignUpService.findStudentdId();
         System.out.println(collects);
@@ -201,8 +208,14 @@ public class WyPayOrderController {
         return "emp/zfAd";
     }
 
-    //订单查询
+    /**
+     * 订单查询
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/orderQuery")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public String orderQuery(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         String id = (String) session.getAttribute("id");
@@ -212,20 +225,20 @@ public class WyPayOrderController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        if ("SUCCESS".equals(map.get("return_code"))){
-//            System.out.println("查询成功，结果：");
-//
-//        }else {
-//            System.out.println("查询失败，原因："+map.get("err_code_des"));
-//        }
         model.addAttribute("out_trade_no", map.get("out_trade_no"));    //订单号
         model.addAttribute("trade_state_desc", map.get("trade_state_desc"));    //订单状态信息
         model.addAttribute("err_code_des", map.get("err_code_des"));    //订单状态信息
         return "emp/payment";
     }
 
-    //按照身份证查询订单
+    /**
+     * 按照身份证查询订单
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/orderQueryid")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String orderQueryByid(HttpServletRequest request, Model model) {
         String id = request.getParameter("payid");
         List<Product> products = new ArrayList<>();
@@ -236,12 +249,6 @@ public class WyPayOrderController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        if ("SUCCESS".equals(map.get("return_code"))){
-//            System.out.println("查询成功，结果：");
-//
-//        }else {
-//            System.out.println("查询失败，原因："+map.get("err_code_des"));
-//        }
         RegistrationForm registrationForm = iSignUpService.selectStudentById(id);
         product.setRemark(registrationForm.getSid().toString());
         product.setOrderNo(id);//订单号
@@ -254,8 +261,14 @@ public class WyPayOrderController {
     }
 
 
-    //订单关闭
+    /**
+     * 订单关闭
+     * @param request
+     * @param model
+     * @return
+     */
     @PostMapping("/orderClose")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String orderClose(HttpServletRequest request, Model model) {
         String out_trade_no = request.getParameter("id");
         Map<String, String> map = null;

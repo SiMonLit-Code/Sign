@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author 周志通
  * @version 1.0
  * @className WxPayOrderService
  * @date 2020/5/21 14:45
