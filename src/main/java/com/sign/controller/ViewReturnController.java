@@ -14,15 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ViewReturnController {
     /**
      * 自定义登录页面
+     *
      * @return
      */
     @RequestMapping("/login")
-    public String loginDashboard(){
+    public String loginDashboard() {
         return "index";
     }
 
     @RequestMapping("/success")
-    public String loginSuccess(){
+    public String loginSuccess() {
         return "dashboard";
     }
 
@@ -33,6 +34,7 @@ public class ViewReturnController {
 
     /**
      * 注册页面
+     *
      * @return
      */
     @GetMapping("/register")
@@ -42,7 +44,7 @@ public class ViewReturnController {
 
     //跳转修改页面
     @GetMapping("/adminUpdatePage")
-    public String adminUpdatePage(){
+    public String adminUpdatePage() {
         return "admin/adminUpdate";
     }
 
@@ -62,7 +64,7 @@ public class ViewReturnController {
     }
 
     @GetMapping("/admin/returnAd")
-    public String returnAdmin(){
+    public String returnAdmin() {
         return "admin/adminlogin";
     }
 }

@@ -1,6 +1,12 @@
 package com.sign.utils;
 
-import com.google.zxing.*;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.DecodeHintType;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
@@ -15,7 +21,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URL;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -23,7 +28,7 @@ import java.util.Map;
 
 /**
  * 生成二维码
- * @author 周志通
+ *
  * @version 1.0
  * @description TODO
  * @date 2020/5/20 10:44
@@ -44,7 +49,7 @@ public class QRCodeUtil {
     //二维码参数
     private static Map<EncodeHintType, Object> hints = new HashMap();
 
-    static{
+    static {
         //设置字符编码类型
         hints.put(EncodeHintType.CHARACTER_SET, CHARSET);
         //设置纠错等级L/M/Q/H，纠错等级越高越不易识别，当前设置等级为最高等级H
@@ -55,16 +60,19 @@ public class QRCodeUtil {
 
     /**
      * 生成二维码，写入输出流（例如：response.getOutputStream()）
+     *
      * @param codeContent 二维码内容
-     * @param out 输出流
+     * @param out         输出流
      */
     public static void createQROutput(String codeContent, OutputStream out) throws Exception {
         BitMatrix bitMatrix = new MultiFormatWriter().encode(codeContent, BarcodeFormat.QR_CODE, CODE_WIDTH, CODE_HEIGHT, hints);
         MatrixToImageWriter.writeToStream(bitMatrix, FORMAT, out);
     }
     //------------------------------解析二维码------------------------------
+
     /**
      * 解析二维码文件
+     *
      * @param filePath 文件路径
      * @return
      */
@@ -83,13 +91,14 @@ public class QRCodeUtil {
 
     /**
      * 创建二维码
-     * @param url 微信二维码地址
-     * @param fileName 保存的文件名
+     *
+     * @param url           微信二维码地址
+     * @param fileName      保存的文件名
      * @param fileDirectory 保存的文件地址
      * @return
      * @throws IOException
      */
-    public static String createQRCode(String url,String fileDirectory,String fileName) throws IOException {
+    public static String createQRCode(String url, String fileDirectory, String fileName) throws IOException {
         int width = 500;
         int height = 500;
         String format = "png";
@@ -100,8 +109,8 @@ public class QRCodeUtil {
         try {
             BitMatrix bitMatrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height, hints);
 
-            File fileDir = new File(fileDirectory);
-            Path file = new File(fileDirectory,fileName+".png").toPath();//在D盘生成二维码图片
+            //在D盘生成二维码图片
+            Path file = new File(fileDirectory, fileName + ".png").toPath();
             MatrixToImageWriter.writeToPath(bitMatrix, format, file);
             BufferedImage image = MatrixToImageWriter.toBufferedImage(bitMatrix);
             ByteArrayOutputStream os = new ByteArrayOutputStream();//新建流。
@@ -113,7 +122,7 @@ public class QRCodeUtil {
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }finally {
+        } finally {
             //DeleteFileUtil.delete(fileDirectory);
         }
         return "NULL";

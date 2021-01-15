@@ -5,11 +5,13 @@ import com.sign.entity.CollectExcl;
 import com.sign.entity.RegistrationForm;
 import com.sign.entity.RegistrationFormAddition;
 import com.sign.entity.User;
+import com.sign.service.IAdministratorService;
 import com.sign.service.IRegisterService;
 import com.sign.service.ISignUpService;
 import com.sign.service.WxPayOrderService;
 import com.sign.utils.AdministratorUtil;
 import com.sign.utils.FilePathUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +33,8 @@ public class AdministratorController {
     @Resource
     IRegisterService iRegisterService;
 
-    @Resource
-    private WxPayOrderService payOrderService;
+    @Autowired
+    IAdministratorService iAdministratorService;
 
 
     //管理员登陆
@@ -88,54 +90,19 @@ public class AdministratorController {
 
     @GetMapping("/fileload")
     public String adFileLoad(Model model) {
-//        String fileName = request.getParameter("fpath");
-//        System.out.println(fileName);
-        String filepath = "\\static\\files\\";
-        List<RegistrationForm> registrationForms = iSignUpService.findStudent();
-        List<RegistrationFormAddition> registrationFormAdditionList = iSignUpService.associationFind();
-        Map<String, String> map = null;
-
-        for (RegistrationForm registrationForm : registrationForms) {
-            try {
-                map = payOrderService.orderQuery(registrationForm.getDid());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            registrationForm.setPay(map.get("trade_state_desc"));
-        }
-        for (RegistrationFormAddition registrationFormAddition : registrationFormAdditionList) {
-            for (RegistrationForm registrationForm : registrationForms) {
-                if (registrationFormAddition.getDid().equals(registrationForm.getDid())) {
-                    registrationForm.setCard(registrationFormAddition.getCard());
-                    registrationForm.setExam(registrationFormAddition.getExam());
-                    registrationForm.setSoldier(registrationFormAddition.getSoldier());
-                }
-            }
-        }
 //        String fileName="C:\\nclg.xls";
-        EasyExcel.write(FilePathUtils.getFileName(filepath) + "nclg.xls", CollectExcl.class).sheet("南昌理工考生信息").doWrite(registrationForms);
-
-//        try {
-//
-//            FileUtils.fileUnload("nclg.xls",response);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        model.addAttribute("suc", "文件导出成功");
+        if (iAdministratorService.exportExl()) {
+            model.addAttribute("suc", "文件导出成功");
+        } else {
+            model.addAttribute("suc", "文件导出失败");
+        }
         return "emp/file";
     }
 
 
-//    @GetMapping("/zh")
-//    public String zh(){
-//        return "emp/listcx";
-//    }
-
     @PostMapping("/query")
     public ModelAndView findStuInformationById(@RequestParam("id") String id) {
-//        RegistrationForm stu = iSignUpService.selectStudentById(id);
         RegistrationFormAddition stuRegistrationFormAddition = iSignUpService.associationSecFind(id);
-//        System.out.println(stuRegistrationFormAddition.getRegistrationForm());
         User user = iRegisterService.registerFindById(id);
         return AdministratorUtil.findStuInformationById(stuRegistrationFormAddition, user);
     }

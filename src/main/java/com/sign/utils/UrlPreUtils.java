@@ -10,7 +10,6 @@ import org.apache.http.util.EntityUtils;
 /**
  * @ClassName UrlPreUtils
  * @Description TODO
- * @Author 周志通
  * @Date 2020/5/17 10:51
  * @Version 1.0
  */
@@ -21,11 +20,9 @@ public class UrlPreUtils {
     /**
      * @Description: 发送POST请求
      * @MethodName: post
-     * @Author: 周志通
      * @Date: 2020/5/17
      * @param url 访问的URL地址
      * @param json 发送的数据
-     * @Return: java.lang.String
      **/
     public static String post(String url, String json) {
         StringBuffer requestText = new StringBuffer() ;
@@ -35,11 +32,15 @@ public class UrlPreUtils {
         HttpPost httpPost = new HttpPost(url) ;
         StringEntity entityParams = null ;
         try {
+            //设置请求体参数
             entityParams = new StringEntity(json,"UTF-8") ;
             httpPost.setEntity(entityParams);
+            //设置请求头参数
             httpPost.setHeader("Content-type","type/json;charset=ISO-8859-1") ;
 //            httpPost.setHeader("Content-type","type/json;charset=UTF-8") ;
+            //创建Http实例
             client = HttpClients.createDefault() ;
+            //发送请求，获得返回对象
             response = client.execute(httpPost) ;
             byte[] x = EntityUtils.toByteArray(response.getEntity()) ;
             requestText.append(new String(x,ENCODING)) ;

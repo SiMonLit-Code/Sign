@@ -53,8 +53,7 @@ public class LoginAndRegisterUtil {
         if ("user".equals(status)) {
             //正确登录
             mv.setViewName("redirect:/main");
-        }
-        if ("admin".equals(status)) {
+        }else if ("admin".equals(status)) {
             //管理员登录
             mv.setViewName("redirect:/mainAd");
         } else {

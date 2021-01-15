@@ -105,9 +105,6 @@ public class SignUpController {
         String[] str = cidName.split(" ");
         collect.setCid(Integer.parseInt(str[0]));
         collect.setCname(str[1]);
-//        HttpSession session = request.getSession();
-//        session.setAttribute("collect", collect);
-//        System.out.println(collect);
         boolean var1 = iSignUpService.insertStudent(collect);
         boolean var2 = iSignUpService.insertSecStudent(collect);
         return SignUpUtil.insertStudentDecorateMV(var1, var2, collect);
@@ -126,13 +123,11 @@ public class SignUpController {
             return mv;
         }
         // 获取上传文件名
-
         String ext = filename.substring(filename.indexOf(".") + 1);
         if ("jpg".equals(ext) || "JPG".equals(ext)) {
             File picFile = SignUpUtil.picPathFile(ext);
             try {
                 // 写入文件
-//                Thumbnails.of((File) file).size(480,640).toFile((File) file);
                 file.transferTo(picFile);
             } catch (IOException e) {
                 e.printStackTrace();

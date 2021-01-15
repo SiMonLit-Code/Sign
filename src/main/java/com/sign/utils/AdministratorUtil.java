@@ -2,6 +2,7 @@ package com.sign.utils;
 
 import com.sign.constant.ExamInformation;
 import com.sign.entity.MZDM;
+import com.sign.entity.RegistrationForm;
 import com.sign.entity.RegistrationFormAddition;
 import com.sign.entity.User;
 import com.sign.entity.ZZMMDM;
@@ -18,26 +19,12 @@ import java.util.List;
 public class AdministratorUtil {
     public static ModelAndView findStuInformationById(RegistrationFormAddition stuAdd, User user) {
         ModelAndView mv = new ModelAndView();
-        if (!(null == user || !"USER".equals(user.getRole())) && stuAdd == null) {
+        if (null == stuAdd  || null == user || !"ROLE_USER".equals(user.getRole())) {
             mv.addObject("Msgnull", "查无此人");
             mv.setViewName("emp/listcx");
+            return mv;
         }
-        List<MZDM> mzdms = ExamInformation.nationCode;
-        List<ZZMMDM> zzmmdms = ExamInformation.politicsStatus;
-
-        for (MZDM mzdm : mzdms) {
-            if (stuAdd.getRegistrationForm().getNation().equals(mzdm.getMzdm())) {
-                stuAdd.getRegistrationForm().setNation(mzdm.getMzmc());
-                break;
-            }
-        }
-        for (ZZMMDM zzmmdm :
-                zzmmdms) {
-            if (stuAdd.getRegistrationForm().getPc().equals(zzmmdm.getZzmmdm())) {
-                stuAdd.getRegistrationForm().setPc(zzmmdm.getZzmmmc());
-                break;
-            }
-        }
+        findNationCodeAndPoliticsStatus(stuAdd.getRegistrationForm());
         mv.addObject("stu", stuAdd);
         mv.addObject("zh", user);
         mv.setViewName("emp/listId");
@@ -47,26 +34,29 @@ public class AdministratorUtil {
 
     public static ModelAndView findStuInformation(List<RegistrationFormAddition> stuAdds) {
         ModelAndView mv = new ModelAndView();
-        List<MZDM> nationCode = ExamInformation.nationCode;
-        List<ZZMMDM> politicsStatus = ExamInformation.politicsStatus;
-        stuAdds.forEach(stu -> {
-            if (stu.getRegistrationForm() != null) {
-                for (MZDM mzdm : nationCode) {
-                    if (stu.getRegistrationForm().getNation().equals(mzdm.getMzdm())) {
-                        stu.getRegistrationForm().setNation(mzdm.getMzmc());
-                        break;
-                    }
-                }
-                for (ZZMMDM zzmmdm : politicsStatus) {
-                    if (stu.getRegistrationForm().getPc().equals(zzmmdm.getZzmmdm())) {
-                        stu.getRegistrationForm().setPc(zzmmdm.getZzmmmc());
-                        break;
-                    }
-                }
-            }
-        });
+        stuAdds.forEach(stu -> findNationCodeAndPoliticsStatus(stu.getRegistrationForm()));
         mv.addObject("stus", stuAdds);
         mv.setViewName("emp/list");
         return mv;
+    }
+
+
+    private static void findNationCodeAndPoliticsStatus(RegistrationForm registrationForm){
+        List<MZDM> nationCode = ExamInformation.nationCode;
+        List<ZZMMDM> politicsStatus = ExamInformation.politicsStatus;
+        if (registrationForm != null) {
+            for (MZDM mzdm : nationCode) {
+                if (registrationForm.getNation().equals(mzdm.getMzdm())) {
+                    registrationForm.setNation(mzdm.getMzmc());
+                    break;
+                }
+            }
+            for (ZZMMDM zzmmdm : politicsStatus) {
+                if (registrationForm.getPc().equals(zzmmdm.getZzmmdm())) {
+                    registrationForm.setPc(zzmmdm.getZzmmmc());
+                    break;
+                }
+            }
+        }
     }
 }

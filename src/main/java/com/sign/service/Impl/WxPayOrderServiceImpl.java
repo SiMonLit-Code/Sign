@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author 周志通
  * @version 1.0
  * @className WxPayOrderServiceImpl
  * @description TODO
@@ -52,7 +51,9 @@ public class WxPayOrderServiceImpl implements WxPayOrderService {
             map = DataJoinUtils.wxPay(notify_url, out_trade_no, total_fee, ip, body);
             String return_code = map.get("return_code");
             if("SUCCESS".equals(return_code)){
+                //获取二维码地址
                 String url = map.get("code_url");
+                //下载二维码并保存
                 QRCodeUtil.createQRCode(url, FILEPATH, out_trade_no);
                 String images = QRCodeUtil.parseQRFile(FILEPATH + out_trade_no + ".png");
                 ServletOutputStream outputStream = response.getOutputStream() ;

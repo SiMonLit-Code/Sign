@@ -3,7 +3,7 @@ package com.sign.service.Impl;
 import com.sign.dao.SignUpDao;
 import com.sign.entity.RegistrationForm;
 import com.sign.entity.RegistrationFormAddition;
-import com.sign.function.FunctionApplication;
+import com.sign.utils.FunctionApplication;
 import com.sign.service.ISignUpService;
 import com.sign.vo.RegistrationFormVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,27 +17,20 @@ public class SignUpServiceImpl implements ISignUpService {
     @Autowired
     private SignUpDao signUpDao;
 
-    @Autowired
-    private FunctionApplication functionApplication;
-
-
     @Override
     public boolean insertStudent(RegistrationFormVo collect) {
-        boolean flag =false ;
-        synchronized (this) {
+        boolean flag = false;
+        synchronized (SignUpServiceImpl.class) {
             //检测名字中的空格
-            collect.setSname(collect.getSname().replace(" ",""));
-//            System.out.println(registrationForm.getGid());
-                if (!functionApplication.toStringGid(collect.getGid()) || !functionApplication.posLength(collect.getPos().toString()) ||
-                !functionApplication.posLength(collect.getNid().toString()) || !functionApplication.posLength(collect.getParent())  ||
-                        !functionApplication.posLength(collect.getPerson())){
-                    return false;
-                }
-                flag =  signUpDao.insertStudent(collect);
+            collect.setSname(collect.getSname().replace(" ", ""));
+            if (!FunctionApplication.toStringGid(collect.getGid()) || !FunctionApplication.posLength(collect.getPos()) ||
+                    !FunctionApplication.posLength(collect.getNid()) || !FunctionApplication.posLength(collect.getParent()) ||
+                    !FunctionApplication.posLength(collect.getPerson())) {
+                return false;
             }
-//        return signUpDao.insertStudent(registrationForm);
-//        return true;
-        return flag ;
+            flag = signUpDao.insertStudent(collect);
+        }
+        return flag;
 
     }
 
@@ -58,10 +51,10 @@ public class SignUpServiceImpl implements ISignUpService {
 
     @Override
     public Integer updateStudent(RegistrationFormVo collect) {
-        collect.setSname(collect.getSname().replace(" ",""));
-        if (!functionApplication.toStringGid(collect.getGid()) || !functionApplication.posLength(collect.getPos().toString()) ||
-                !functionApplication.posLength(collect.getNid().toString()) || !functionApplication.posLength(collect.getParent())  ||
-                !functionApplication.posLength(collect.getPerson())){
+        collect.setSname(collect.getSname().replace(" ", ""));
+        if (!FunctionApplication.toStringGid(collect.getGid()) || !FunctionApplication.posLength(collect.getPos()) ||
+                !FunctionApplication.posLength(collect.getNid()) || !FunctionApplication.posLength(collect.getParent()) ||
+                !FunctionApplication.posLength(collect.getPerson())) {
             return 0;
         }
         return signUpDao.updateStudent(collect);

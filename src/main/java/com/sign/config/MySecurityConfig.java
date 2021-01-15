@@ -67,7 +67,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 //学生权限
-                .antMatchers("/registration/**").hasRole("USER")
+                .antMatchers("/registration/**","/payment/**").hasRole("USER")
                 //管理员权限
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/login","/index.html","/exit","/register").permitAll()

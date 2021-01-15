@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -43,20 +42,13 @@
 </head>
 
 <body>
-<!--引入抽取的模板topbar-->
-<!--模板名：会使用thymeleaf的前后缀配置规则进行解析  th:insert="~{抽取片段的文件名路径::抽取片段名}"-->
-<!--两种写法：th:replace="~{dashboard::topbar}"和th:replace="dashboard::topbar"-->
 <div th:replace="admin/bar/bar::top"></div>
 <div class="container-fluid">
     <div class="row">
-        <!--引入侧边栏 使用th:replace="~{抽取片段的文件名路径::#id名}"-->
         <div th:replace="~{admin/bar/bar::side(active='zf')}"></div>
-
 <!--            <a href="/payment/orderSubmit">支付二维码显示</a>-->
 <!--            <p style="color: red" th:if="${not #strings.isEmpty(trade_state_desc)}" th:text="${trade_state_desc}"></p>-->
-
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-                <!--					<div><h2><button class="btn-light" onclick="save()">添加员工</button></h2><input style="align-content: center" ></div>-->
                 <div class="table-responsive" >
                     <h1>请用输入需要关闭订单的身份证号</h1>
 <!--                    <p style="color: red" th:if="${not #strings.isEmpty(result_code)}" th:text="${result_code}"></p>-->

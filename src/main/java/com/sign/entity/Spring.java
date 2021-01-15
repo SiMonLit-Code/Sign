@@ -18,7 +18,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Data
 public class Spring implements Serializable {
-//    private static final long serialVersionUID = 910504581118860451L;
+    private static final long serialVersionUID = 910504581118860451L;
     
     private String sid;
     

@@ -29,7 +29,7 @@ server:
 
 
 #path_url: http://117.40.249.5:9090
-notify_url: http://122.51.39.223:9090/payment/getpayResult
+
 
 #jwt:
 #  #盐

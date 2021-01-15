@@ -56,12 +56,11 @@
 				<div th:replace="~{admin/bar/bar::side(active='wj')}"></div>
 
 				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-<!--					<div><h2><button class="btn-light" onclick="save()">添加员工</button></h2><input style="align-content: center" ></div>-->
 					<div class="table-responsive" >
 							<h1>考生信息表导出（在服务器项目下/static/files/nclg.xls）</h1>
 						<p style="color: red" th:if="${not #strings.isEmpty(suc)}" th:text="${suc}"></p>
 
-						<form th:action="@{/fileload}" method="get">
+						<form th:action="@{/admin/fileload}" method="get">
 <!--								<label>文件名</label>-->
 <!--								<input name="fname" type="text" class="form-control"  required="">-->
 <!--								<input name="fpath" type="text" class="form-control"  required="" th:value="${'D:\\nclg.xls'}">-->

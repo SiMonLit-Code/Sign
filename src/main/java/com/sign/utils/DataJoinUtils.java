@@ -9,7 +9,6 @@ import java.util.Map;
 /**
  * @ClassName DataJoinUtils
  * @Description TODO
- * @Author 周志通
  * @Date 2020/5/17 9:59
  * @Version 1.0
  */
@@ -48,11 +47,11 @@ public class DataJoinUtils {
         // 商品描述
         map.put("body",body) ;
         //订单结束时间
-        map.put("time_expire","20200701000000") ;
+        map.put("time_expire","20220701000000") ;
         // 商品订单号
         map.put("out_trade_no",out_trade_no) ;
         // 订单总金额，单位：分
-        map.put("total_fee", "13000") ;
+        map.put("total_fee", total_fee) ;
         // 终端 IP
         map.put("spbill_create_ip", ip) ;
         //异步接受微信支付结果通知的回调地址，通知 url 必须为外网可访问的 url , 不能携带参数
@@ -61,9 +60,13 @@ public class DataJoinUtils {
         map.put("trade_type", "NATIVE") ;
         //trade_type=NATIVE时(即扫码支付), 此参数必传， 此参数为二维码中包含：商品ID，商户自行定义
         map.put("product_id", out_trade_no) ;
+
+        //以上信息+密钥生成签名
         String sign = WXPayUtil.generateSignature(map, ConfigConstant.KEY) ;
         map.put("sign", sign) ;
-        String xmlStr = getSignatureXml(map);   //生成带有 sign 的 XML 格式字符串
+
+        //生成带有 sign 的 XML 格式字符串
+        String xmlStr = getSignatureXml(map);
         System.out.println(xmlStr);
         //指定与微信交互URL接口地址
         return getPostURLToMap(url_unified, xmlStr);
@@ -74,7 +77,6 @@ public class DataJoinUtils {
      * <>
      * @description TODO
      * @methodName wxQuery
-     * @author  周志通
      * @param out_trade_no 商户订单 ID
      * @date 2020/5/18
      * @Return: java.util.Map<java.lang.String,java.lang.String>
@@ -87,7 +89,6 @@ public class DataJoinUtils {
      * <>
      * @description TODO
      * @methodName wxClosed
-     * @author 周志通
      * @param out_trade_no
      * @date 2020/5/19
      * @Return java.util.Map<java.lang.String,java.lang.String>
@@ -114,18 +115,14 @@ public class DataJoinUtils {
     }
 
     /**
-     * 功能描述: 发送 POST 请求 <br>
-     *     并返回
-     * <>
+     * 功能描述: 将封装好的xml信息，发送 POST 请求并返回
      * @description TODO
      * @methodName getPostURLToMap
-     * @author 周志通
      * @param xmlStr 发送 POST 请求的 xml 数据
      * @date 2020/5/18
-     * @Return: java.util.Map<java.lang.String,java.lang.String>
      **/
     private static Map<String, String> getPostURLToMap(String url, String xmlStr) {
-        String str = com.sign.utils.UrlPreUtils.post(url, xmlStr) ;
+        String str = UrlPreUtils.post(url, xmlStr) ;
         Map<String,String> retMap = new HashMap<>() ;
         try {
             retMap = WXPayUtil.xmlToMap(str) ;  // XML格式字符串转换为Map

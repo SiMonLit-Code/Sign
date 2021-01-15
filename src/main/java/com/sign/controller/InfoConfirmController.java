@@ -17,12 +17,11 @@ public class InfoConfirmController {
     IConfirmInfoService iConfirmInfoService;
 
 
-
     @PostMapping("/confirmAf")
     public String findConfirmInfoById(HttpServletRequest request, Model model) {
-        HttpSession session=request.getSession();
-        String id= (String) session.getAttribute("id");
-        model.addAttribute("confirmInfo",iConfirmInfoService.findConfirmInfoById(id));
+        HttpSession session = request.getSession();
+        String id = (String) session.getAttribute("id");
+        model.addAttribute("confirmInfo", iConfirmInfoService.findConfirmInfoById(id));
         return "emp/confirm";
     }
 
@@ -34,7 +33,7 @@ public class InfoConfirmController {
 
     @PostMapping("/InfoUpdate")
     public Integer updateConfirmInfoById(String BKZY, String CINFO) {
-        return iConfirmInfoService.updateConfirmInfoById(BKZY,CINFO);
+        return iConfirmInfoService.updateConfirmInfoById(BKZY, CINFO);
     }
 
 }
