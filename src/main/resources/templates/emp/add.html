@@ -125,10 +125,6 @@
                         <option th:value="${zzmm.getZzmmdm()}" th:each="zzmm:${zzmmdm}" th:text="${zzmm.getZzmmdm()+''+zzmm.getZzmmmc()}"></option>
                     </select>
                 </div>
-<!--                <div class="form-group">-->
-<!--                    <label>政治面貌代码</label>-->
-<!--                    <input name="pc" type="text" class="form-control"  required="">-->
-<!--                </div>-->
                 <div class="form-group">
                     <label>专科所学专业</label>
                     <input name="cmajor" type="text" class="form-control" required="">
@@ -173,10 +169,6 @@
                     <label>父母联系电话</label>
                     <input name="parent" type="text" class="form-control" maxlength="11" th:placeholder="11位电话号码" required="">
                 </div>
-<!--                <div class="form-group">-->
-<!--                    <label>考生类别代码</label>-->
-<!--                    <input name="kid" type="text" class="form-control" required="">-->
-<!--                </div>-->
                 <div class="form-group">
                     <label>考生类别</label>
                     <select class="form-control" name="kid">
@@ -193,15 +185,6 @@
                         <option th:value="${byxx.getByxxdm()+' '+byxx.getByxxmc()}" th:each="byxx:${byxxdm}" th:text="${byxx.getByxxdm()+''+byxx.getByxxmc()}"></option>
                     </select>
                 </div>
-<!--                <div class="form-group">-->
-<!--                    <label>毕业学校代码</label>-->
-<!--                    <input name="cId" type="text" class="form-control"  required="">-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <label>毕业学校名称</label>-->
-<!--                    <input name="cname" type="text" class="form-control"  required="" readonly >-->
-<!--                </div>-->
-
                 <div class="form-group">
                     <label>户籍代码</label> <a href="/registration/hjdm" target="_blank">户籍代码查询</a>
                     <input name="nid" type="text" class="form-control" th:placeholder="6位户籍代码"  required="" maxlength="6">
@@ -215,7 +198,6 @@
                     <label>推荐老师电话(选填)</label>
                     <input name="tel" type="text" class="form-control" maxlength="11" >
                 </div>
-
                 <button type="submit" class="btn btn-primary">报名</button>
             </form>
         </main>
@@ -228,44 +210,6 @@
 <script type="text/javascript" th:src="@{/static/asserts/js/jquery-3.2.1.slim.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/asserts/js/popper.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/asserts/js/bootstrap.min.js}"></script>
-
-<!-- Icons -->
-<script type="text/javascript" th:src="@{/static/asserts/js/feather.min.js}"></script>
-<script>
-    feather.replace()
-</script>
-
-<!-- Graphs -->
-<script type="text/javascript" th:src="@{/static/asserts/js/Chart.min.js}"></script>
-<script>
-    var ctx = document.getElementById("myChart");
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            datasets: [{
-                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                lineTension: 0,
-                backgroundColor: 'transparent',
-                borderColor: '#007bff',
-                borderWidth: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
-            },
-            legend: {
-                display: false,
-            }
-        }
-    });
-</script>
 
 <script>
     var select1 = document.getElementById("select1");

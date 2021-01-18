@@ -55,7 +55,7 @@
             <form th:action="@{/registration/update}" method="post">
                 <!--                <div class="form-group">-->
                 <!--                    <label>考生报名序号（不可修改）</label>-->
-                <input hidden="hidden" name="sid" type="text" class="form-control" th:value="${student.getSid()}" >
+                <input hidden="hidden" name="sid" type="text" class="form-control" th:value="${student.getSid()}">
                 <!--                </div>-->
                 <div class="form-group">
                     <label>考生姓名</label>
@@ -92,11 +92,13 @@
                 <div class="form-group">
                     <label>是否建档立卡</label><br/>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="card"  value="是" th:checked="${addstudent.getCard()=='是'}">
+                        <input class="form-check-input" type="radio" name="card" value="是"
+                               th:checked="${addstudent.getCard()=='是'}">
                         <label class="form-check-label">是</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="card"  value="否" th:checked="${addstudent.getCard()=='否'}">
+                        <input class="form-check-input" type="radio" name="card" value="否"
+                               th:checked="${addstudent.getCard()=='否'}">
                         <label class="form-check-label">否</label>
                     </div>
                 </div>
@@ -104,11 +106,13 @@
                 <div class="form-group">
                     <label>是否退伍士兵</label><br/>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="soldier"  value="是" th:checked="${addstudent.getSoldier()=='是'}">
+                        <input class="form-check-input" type="radio" name="soldier" value="是"
+                               th:checked="${addstudent.getSoldier()=='是'}">
                         <label class="form-check-label">是</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="soldier"  value="否" th:checked="${addstudent.getSoldier()=='否'}">
+                        <input class="form-check-input" type="radio" name="soldier" value="否"
+                               th:checked="${addstudent.getSoldier()=='否'}">
                         <label class="form-check-label">否</label>
                     </div>
                 </div>
@@ -130,12 +134,13 @@
                     <label>报考专业</label>
                     <select class="form-control" name="gmajor" id="select1">
                         <!--政治面貌代码-->
-                        <option th:value="${bk.getBkzy()}" th:each="bk:${bkzy}" th:text="${bk.getBkzy()}" th:selected="${bk.getBkzy()}==${student.getGmajor()}"></option>
+                        <option th:value="${bk.getBkzy()}" th:each="bk:${bkzy}" th:text="${bk.getBkzy()}"
+                                th:selected="${bk.getBkzy()}==${student.getGmajor()}"></option>
                     </select>
                 </div>
                 <div id="selectdiv" class="form-group" style="display: none">
                     <label>专业考试选择</label>
-                    <select class="form-control" name="exam" id="select2" >
+                    <select class="form-control" name="exam" id="select2">
                         <!--政治面貌代码-->
                         <option th:value="微积分" th:text="微积分" th:selected="${addstudent.getExam()}=='微积分'"></option>
                         <option th:value="管理学" th:text="管理学" th:selected="${addstudent.getExam()}=='管理学'"></option>
@@ -143,15 +148,18 @@
                 </div>
                 <div class="form-group">
                     <label>录检表内学生高考考生号</label>
-                    <input name="gid" type="text" class="form-control" th:value="${student.getGid()}" maxlength="14" required="">
+                    <input name="gid" type="text" class="form-control" th:value="${student.getGid()}" maxlength="14"
+                           required="">
                 </div>
                 <div class="form-group">
                     <label>身份证号码(不可修改)</label>
-                    <input name="did" type="text" class="form-control" th:value="${student.getDid()}" required=""  readonly>
+                    <input name="did" type="text" class="form-control" th:value="${student.getDid()}" required=""
+                           readonly>
                 </div>
                 <div class="form-group">
                     <label>学生详细通讯地址</label>
-                    <input name="addr" type="text" class="form-control" th:value="${student.getAddr()}" required="" maxlength="20">
+                    <input name="addr" type="text" class="form-control" th:value="${student.getAddr()}" required=""
+                           maxlength="20">
                 </div>
                 <div class="form-group">
                     <label>邮编</label>
@@ -159,11 +167,13 @@
                 </div>
                 <div class="form-group">
                     <label>本人联系方式</label>
-                    <input name="person" type="text" class="form-control" th:value="${student.getPerson()}" maxlength="11" required="">
+                    <input name="person" type="text" class="form-control" th:value="${student.getPerson()}"
+                           maxlength="11" required="">
                 </div>
                 <div class="form-group">
                     <label>父母联系电话</label>
-                    <input name="parent" type="text" class="form-control" th:value="${student.getParent()}" maxlength="11" required="">
+                    <input name="parent" type="text" class="form-control" th:value="${student.getParent()}"
+                           maxlength="11" required="">
                 </div>
                 <!--                <div class="form-group">-->
                 <!--                    <label>考生类别代码</label>-->
@@ -193,7 +203,8 @@
                 <!--                </div>-->
                 <div class="form-group">
                     <label>户籍代码</label> <a href="/registration/hjdm" target="_blank">户籍代码查询</a>
-                    <input name="nid" type="text" class="form-control" th:value="${student.getNid()}" required="" maxlength="6">
+                    <input name="nid" type="text" class="form-control" th:value="${student.getNid()}" required=""
+                           maxlength="6">
                 </div>
                 <div class="form-group">
                     <label>推荐老师姓名(不可修改)</label>
@@ -201,7 +212,8 @@
                 </div>
                 <div class="form-group">
                     <label>推荐老师电话(不可修改)</label>
-                    <input name="tel" type="text" class="form-control" th:value="${student.getTel()}" maxlength="11" readonly>
+                    <input name="tel" type="text" class="form-control" th:value="${student.getTel()}" maxlength="11"
+                           readonly>
                 </div>
 
                 <button type="submit" class="btn btn-primary">修改</button>
@@ -217,8 +229,6 @@
 <script type="text/javascript" th:src="@{/static/asserts/js/popper.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/asserts/js/bootstrap.min.js}"></script>
 
-<!-- Icons -->
-<script type="text/javascript" th:src="@{/static/asserts/js/feather.min.js}"></script>
 <script>
     feather.replace()
 </script>
@@ -258,27 +268,27 @@
 <script>
     var select1 = document.getElementById("select1");
     var selectdiv = document.getElementById("selectdiv");
-    select1.onchange = function(){
+    select1.onchange = function () {
         var options = select1.getElementsByTagName("option");
         var options1 = select2.getElementsByTagName("option");
-        for(var i = 0; i < options.length; i++){
-            if(options[i].selected){
+        for (var i = 0; i < options.length; i++) {
+            if (options[i].selected) {
                 // alert(options[i].value)
                 // var divid = options[i].id.replace("option","div");
                 // var divs = document.getElementsByTagName("div");
                 // if (options[i]==select2){
                 //
                 // }
-                if(options[i].value =="工商管理" || options[i].value =="市场营销" ||options[i].value =="国际经济贸易" ||
-                    options[i].value =="会计学" || options[i].value =="财务管理" ||options[i].value =="金融工程" ||
-                    options[i].value =="工程造价" ||options[i].value =="工程管理" ||options[i].value =="国际经济与贸易"){
-                    selectdiv.style.display="block";
+                if (options[i].value == "工商管理" || options[i].value == "市场营销" || options[i].value == "国际经济贸易" ||
+                    options[i].value == "会计学" || options[i].value == "财务管理" || options[i].value == "金融工程" ||
+                    options[i].value == "工程造价" || options[i].value == "工程管理" || options[i].value == "国际经济与贸易") {
+                    selectdiv.style.display = "block";
                     // var options2 = select2.getElementsByTagName("option");
                     // alert(options2[0].value);
-                }else {
-                    selectdiv.style.display="none";
-                    options1[0].value="无";
-                    options1[1].value="无";
+                } else {
+                    selectdiv.style.display = "none";
+                    options1[0].value = "无";
+                    options1[1].value = "无";
                 }
             }
         }
