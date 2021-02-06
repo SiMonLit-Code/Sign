@@ -54,14 +54,15 @@
 <!--                    <p style="color: red" th:if="${not #strings.isEmpty(result_code)}" th:text="${result_code}"></p>-->
                     <form th:action="@{/payment/orderClose}" method="post">
                         <input type="text" name="id" required="" />
-                        <input type="submit" value="关闭订单"/>
+                        <input type="submit" value="关闭订单" class="btn btn-success"/><a th:href="@{/payment/orderQueryAll}">一键查询</a>
                     </form>
-                    <a th:href="@{/payment/orderQueryAll}">一键查询</a>
+                    <hr border="10" color="red">
                     <h1>请用输入需要查询的身份证号</h1>
                     <form th:action="@{/payment/orderQueryid}" method="post">
                         <input type="text" name="payid" maxlength="18" required=""/>
-                        <input type="submit" value="查询是否支付"/>
+                        <input type="submit" value="查询是否支付" class="btn btn-success"/>
                     </form>
+                    <hr border="10" color="red">
                     <table class="table table-striped table-sm">
                             <thead>
                             <tr>

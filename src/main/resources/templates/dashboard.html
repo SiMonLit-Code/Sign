@@ -1,86 +1,87 @@
 <!DOCTYPE html>
 <!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<meta name="description" content="">
-		<meta name="author" content="">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>南昌理工学院2020年普通高校专升本报名系统</title>
+    <link th:href="@{/asserts/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
 
-		<title>南昌理工学院2020年普通高校专升本报名系统</title>
-		<!-- Bootstrap core CSS -->
-		<link th:href="@{/asserts/css/bootstrap.min.css}" rel="stylesheet">
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
 
-		<!-- Custom styles for this template -->
-		<link th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
-		<style type="text/css">
-			/* Chart.js */
-			
-			@-webkit-keyframes chartjs-render-animation {
-				from {
-					opacity: 0.99
-				}
-				to {
-					opacity: 1
-				}
-			}
-			
-			@keyframes chartjs-render-animation {
-				from {
-					opacity: 0.99
-				}
-				to {
-					opacity: 1
-				}
-			}
-			
-			.chartjs-render-monitor {
-				-webkit-animation: chartjs-render-animation 0.001s;
-				animation: chartjs-render-animation 0.001s;
-			}
-		</style>
-	</head>
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
 
-	<body>
-		<div th:replace="~{bar/bar::top}"></div>
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+</head>
 
-		<div class="container-fluid">
-			<div class="row">
-				<div th:replace="~{bar/bar::side(active='main')}"></div>
+<body>
+<div th:replace="~{bar/bar::top}"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="~{bar/bar::side(active='main')}"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="chartjs-size-monitor"
+                 style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                </div>
+            </div>
+            <div align="center">
+                <h1 class="h2">欢迎报考南昌理工学院</h1>
+                <p style="color: red" th:if="${not #strings.isEmpty(suc)}" th:text="${suc}"></p>
+                <p style="color: red" th:if="${not #strings.isEmpty(errorMsg)}" th:text="${errorMsg}"></p>
+                <h3 class="text-center">南昌理工学院2020年普通高校专升本在线报名操作指南</h3>
 
-				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-					<div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-						<div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-							<div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-						</div>
-						<div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-							<div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-						</div>
-					</div>
-					<div align="center">
-						<h1 class="h2">欢迎报考南昌理工学院</h1>
-						<p style="color: red" th:if="${not #strings.isEmpty(suc)}" th:text="${suc}"></p>
-						<p style="color: red" th:if="${not #strings.isEmpty(errorMsg)}" th:text="${errorMsg}"></p>
-						<h3 class="text-center">南昌理工学院2020年普通高校专升本在线报名操作指南</h3>
+                <h4>
+                    请各位考生务必于2020年6月18日9：00-2020年6月22日17：00登陆江西省教育考试院网站(http://www.jxeea.cn/)报名,逾期不予办理。最终报名信息以江西省教育考试院网站报名信息为准。</h4>
+                <p>
+                    在江西省教育考试院网站填报完成后，须提交学校进行初审。审核通过后，考生须自行在江西省教育考试院报名系统中打印报名表。若审核不通过，考生应重新登录系统，根据学校审核不通过原因修改个人信息并重新提交学校审核。</p>
+                <p>
+                    审核通过后，在我校报名系统中进行缴费，点击“缴费入口”，点击“下订单”，用微信扫描弹出的二维码进行缴费，所以要求考生在电脑上进行报名，用手机扫描弹出的二维码进行缴费（用手机报名的同学，需用另外一部手机扫描弹出的二维码进行支付），微信不支持调用相册截图或直接识别二维码进行扫描支付。交完费可以点击“查询是否缴费成功”进行查询。交费完成后网上报名工作才算成功。后续工作请关注教务处网站的招生简章。</p>
+                <p> 报名过程中如有问题，请拨打教务处咨询电话：0791-82137568</p>
 
-						<h4>请各位考生务必于2020年6月18日9：00-2020年6月22日17：00登陆江西省教育考试院网站(http://www.jxeea.cn/)报名,逾期不予办理。最终报名信息以江西省教育考试院网站报名信息为准。</h4>
-						<p>在江西省教育考试院网站填报完成后，须提交学校进行初审。审核通过后，考生须自行在江西省教育考试院报名系统中打印报名表。若审核不通过，考生应重新登录系统，根据学校审核不通过原因修改个人信息并重新提交学校审核。</p>
-						<p>	审核通过后，在我校报名系统中进行缴费，点击“缴费入口”，点击“下订单”，用微信扫描弹出的二维码进行缴费，所以要求考生在电脑上进行报名，用手机扫描弹出的二维码进行缴费（用手机报名的同学，需用另外一部手机扫描弹出的二维码进行支付），微信不支持调用相册截图或直接识别二维码进行扫描支付。交完费可以点击“查询是否缴费成功”进行查询。交费完成后网上报名工作才算成功。后续工作请关注教务处网站的招生简章。</p>
-						<p>	报名过程中如有问题，请拨打教务处咨询电话：0791-82137568</p>
+            </div>
+            <canvas class="my-4 chartjs-render-monitor" id="myChart" width="1076" height="454"
+                    style="display: block; width: 1076px; height: 454px;"></canvas>
+        </main>
+    </div>
+</div>
 
-					</div>
-					<canvas class="my-4 chartjs-render-monitor" id="myChart" width="1076" height="454" style="display: block; width: 1076px; height: 454px;"></canvas>
-				</main>
-			</div>
-		</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" th:src="@{/asserts/js/jquery-3.2.1.slim.min.js}"></script>
+<script type="text/javascript" th:src="@{/asserts/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/asserts/js/bootstrap.min.js}"></script>
 
-		<!-- Bootstrap core JavaScript
-    ================================================== -->
-		<!-- Placed at the end of the document so the pages load faster -->
-		<script type="text/javascript" th:src="@{/asserts/js/jquery-3.2.1.slim.min.js}" ></script>
-		<script type="text/javascript" th:src="@{/asserts/js/popper.min.js}" ></script>
-		<script type="text/javascript" th:src="@{/asserts/js/bootstrap.min.js}" ></script>
-
-	</body>
+</body>
 
 </html>

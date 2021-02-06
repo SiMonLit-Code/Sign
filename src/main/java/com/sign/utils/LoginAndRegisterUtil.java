@@ -1,6 +1,9 @@
 package com.sign.utils;
 
+import com.sign.constant.ExamInformation;
 import com.sign.entity.User;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -52,6 +55,7 @@ public class LoginAndRegisterUtil {
         ModelAndView mv = new ModelAndView();
         if ("user".equals(status)) {
             //正确登录
+            ExamInformation.userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             mv.setViewName("redirect:/main");
         }else if ("admin".equals(status)) {
             //管理员登录

@@ -91,7 +91,7 @@ public class WyPayOrderController {
      * @return
      */
     @PostMapping("/orderSubmit")
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     public String order(Product product, HttpServletRequest request, HttpServletResponse response, Model model) {
         product.setOrderNo(ExamInformation.userDetails.getUsername());
         System.out.println(product);

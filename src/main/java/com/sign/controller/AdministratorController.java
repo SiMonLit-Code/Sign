@@ -5,10 +5,7 @@ import com.sign.entity.CollectExcl;
 import com.sign.entity.RegistrationForm;
 import com.sign.entity.RegistrationFormAddition;
 import com.sign.entity.User;
-import com.sign.service.IAdministratorService;
-import com.sign.service.IRegisterService;
-import com.sign.service.ISignUpService;
-import com.sign.service.WxPayOrderService;
+import com.sign.service.*;
 import com.sign.utils.AdministratorUtil;
 import com.sign.utils.FilePathUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -28,14 +26,16 @@ import java.util.Map;
 @RequestMapping("/admin")
 public class AdministratorController {
     @Resource
-    ISignUpService iSignUpService;
+    private ISignUpService iSignUpService;
 
     @Resource
-    IRegisterService iRegisterService;
+    private IRegisterService iRegisterService;
 
     @Autowired
-    IAdministratorService iAdministratorService;
+    private IAdministratorService iAdministratorService;
 
+    @Autowired
+    private IAdminService iAdminService;
 
     //管理员登陆
     /*@PostMapping("/loginAdm")
@@ -59,15 +59,15 @@ public class AdministratorController {
     }*/
 
     //管理员密码修改
-    /*@PostMapping("/adminUpdate")
+    @PostMapping("/adminUpdate")
     public ModelAndView adminUpdate(HttpServletRequest request){
         ModelAndView mv=new ModelAndView();
-        Admin admin=iAdminService.findAdmin();
+        User admin=iAdminService.findAdmin(request.getParameter("username"));
 //        System.out.println(admin.getPassword()+"-----"+request.getParameter("password"));
         if (admin.getPassword().equals(request.getParameter("password")))
         {
-            Admin admin1=new Admin();
-            admin1.setAcc("admin");
+            User admin1=new User();
+            admin1.setUsername(admin.getUsername());
             admin1.setPassword(request.getParameter("password1"));
             iAdminService.updateAdmin(admin1);
             mv.addObject("Msg","密码修改成功");
@@ -76,7 +76,7 @@ public class AdministratorController {
         }
         mv.setViewName("admin/adminUpdate");
         return mv;
-    }*/
+    }
 
 
     //信息查询

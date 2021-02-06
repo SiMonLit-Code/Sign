@@ -47,7 +47,6 @@ public class LoginAndRegisterController {
     //学生登陆
     @PostMapping(value = "/loginStu")
     public ModelAndView loginStudent(HttpServletRequest request) {
-        ExamInformation.userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String flag = (String) request.getAttribute("flag");
         return LoginAndRegisterUtil.loginStatusInf(flag);
     }

@@ -1,9 +1,10 @@
 package com.sign.service;
 
 import com.sign.entity.Admin;
+import com.sign.entity.User;
 
 public interface IAdminService {
-    public Integer updateAdmin(Admin admin);
+    Integer updateAdmin(User admin);
 
-    public Admin findAdmin();
+    User findAdmin(String username);
 }

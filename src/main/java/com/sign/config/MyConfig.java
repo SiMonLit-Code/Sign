@@ -28,6 +28,8 @@ public class MyConfig implements WebMvcConfigurer {
 //        registry.addViewController("/index.html").setViewName("index");
         registry.addViewController("/main").setViewName("dashboard");
         registry.addViewController("/mainAd").setViewName("adminboard");
+        // 管理员账户修改页面
+        registry.addViewController("/enter").setViewName("admin/adminUpdate");
     }
 
 

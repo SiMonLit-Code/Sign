@@ -7,22 +7,24 @@
     <meta name="author" content="">
     <title>信息注册</title>
     <!-- Bootstrap core CSS -->
-    <link href="asserts/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/asserts/css/bootstrap.min.css}" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="asserts/css/signin.css" rel="stylesheet">
+    <link th:href="@{/asserts/css/signin.css}" rel="stylesheet">
 </head>
 
 <body class="text-center">
-<form class="form-signin" action="/adminUpdate" method="post">
+<form class="form-signin" th:action="@{/admin/adminUpdate}" method="post">
     <!--			<img class="mb-4" src="asserts/img/bootstrap-solid.svg" alt="" width="72" height="72">-->
     <h1 style="font-family: 'Arial Black';margin-bottom: 35px">管理员密码修改</h1>
     <!--    <p style="color: red" th:if="${not #strings.isEmpty(acountmsg)}" th:text="${acountmsg}"></p>-->
     <p style="color: red" th:if="${not #strings.isEmpty(Msg)}" th:text="${Msg}"></p>
-        <label class="sr-only" >管理员账户</label>
-    <input type="text"  class="form-control" th:value="admin" style="margin-bottom: 10px"   readonly>
-        <label class="sr-only" >管理员密码</label>
-    <input type="password" th:maxlength="18" class="form-control" name="password" th:placeholder="旧密码" required="" style="margin-bottom: 20px">
-    <input type="password" th:maxlength="18" class="form-control" name="password1" th:placeholder="新密码" required="" style="margin-bottom: 20px">
+    <label class="sr-only">管理员账户</label>
+    <input type="text" name="username" class="form-control" th:placeholder="管理员账号" style="margin-bottom: 10px">
+    <label class="sr-only">管理员密码</label>
+    <input type="password" th:maxlength="18" class="form-control" name="password" th:placeholder="旧密码" required=""
+           style="margin-bottom: 20px">
+    <input type="password" th:maxlength="18" class="form-control" name="password1" th:placeholder="新密码" required=""
+           style="margin-bottom: 20px">
     <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-bottom: 20px">修改</button>
     <a href="/returnAd">返回</a>
     <p class="mt-5 mb-3 text-muted">© 2020-2021</p>

@@ -16,17 +16,13 @@ import java.util.List;
 @Mapper
 public interface SpringDao {
 
-
     /**
      * 通过ID查询单条数据
      *
-     * @param  did
+     * @param did
      * @return 实例对象
      */
-    @Select("select DISTINCT * from spring where did=#{did}")
+    @Select("select DISTINCT * from certificate where did=#{did}")
     Spring queryById(String did);
-
-
-
 
 }

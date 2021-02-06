@@ -83,7 +83,11 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         // 设置拦截忽略文件夹，可以对静态资源放行
         web.ignoring().antMatchers("/css/**", "/js/**","/asserts/**");
-//        web.ignoring().antMatchers(HttpMethod.GET,"/register");
+        // 绕过过滤器
+        web.ignoring().antMatchers(HttpMethod.POST,"/payment/orderSubmit");
+
+        web.ignoring().antMatchers(HttpMethod.GET,"/enter");
+        web.ignoring().antMatchers(HttpMethod.POST,"/admin/adminUpdate");
     }
 
     @Override
